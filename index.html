@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0B0A32">
+  <meta name="description" content="Conheça o GEOEDUCA: atividades, quizzes, provas e jogos de geografia em uma plataforma para professores e alunos.">
+  <title>GEOEDUCA — Geografia em movimento</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="assets/vendor/three.min.js"></script>
+  <script defer src="assets/vendor/gsap.min.js"></script>
+  <script defer src="assets/vendor/ScrollTrigger.min.js"></script>
+  <script defer src="assets/earth-data.js"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <svg class="icon-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><ellipse cx="12" cy="12" rx="4.5" ry="9.5"/><path d="M2.5 12h19M4.5 6.5h15M4.5 17.5h15"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 5v16M12 5C8 2 4 3 2 4v15c4-2 7-1 10 2 3-3 6-4 10-2V4c-2-1-6-2-10 1Z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M16 4a3 3 0 0 1 0 6M21 21v-3a6 6 0 0 0-4-5.65"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 3v17h17M8 15v-4M13 15V7M18 15V4"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="m2 6 7-3 6 3 7-3v15l-7 3-6-3-7 3V6ZM9 3v15M15 6v15"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M19 10c0 6-7 11-7 11S5 16 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-game" viewBox="0 0 24 24"><path d="M7 7h10c3 0 4 3 5 10 0 3-3 4-5 1l-2-2H9l-2 2c-2 3-5 2-5-1 1-7 2-10 5-10Z M8 10v5M5.5 12.5h5M16 11h.01M19 14h.01"/></symbol>
+  </svg>
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a class="brand" href="#inicio" aria-label="GEOEDUCA, início"><svg class="icon brand-icon"><use href="#i-globe"/></svg><span>GEO<span class="brand-accent">EDUCA</span></span></a>
+      <button class="menu-toggle" aria-controls="navigation" aria-expanded="false" aria-label="Abrir menu"><span></span><span></span></button>
+      <nav id="navigation" aria-label="Navegação principal">
+        <a href="#recursos">Recursos</a><a href="#como-funciona">Como funciona</a><a href="#projeto">O projeto</a><a href="#precos">Preços</a>
+        <a class="button button-small button-outline-light" href="../index.html" data-platform-link>Acessar plataforma</a>
+      </nav>
+    </div>
+    <div class="reading-progress" aria-hidden="true"></div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="container hero-layout">
+        <div class="hero-copy">
+          <p class="eyebrow light"><span class="small-line"></span> GEOGRAFIA EM MOVIMENTO</p>
+          <h1 id="hero-title">O mundo é a sua<br><span class="gold-text">sala de aula.</span></h1>
+          <p class="hero-description">Transforme suas aulas de geografia em experiências interativas. Atividades, avaliações e jogos conectam quem ensina a quem aprende.</p>
+          <div class="hero-actions"><a class="button button-gold" href="#recursos">Conhecer os recursos</a><a class="text-link light-link" href="#precos">Ver planos</a></div>
+          <div class="hero-note"><svg class="icon"><use href="#i-users"/></svg><span>Uma plataforma para professores e alunos.</span></div>
+        </div>
+        <div class="earth-scene" aria-label="Globo terrestre tridimensional cuja rotação acompanha a rolagem da página" role="img">
+          <div class="earth-orbit orbit-one" aria-hidden="true"></div><div class="earth-orbit orbit-two" aria-hidden="true"></div>
+          <img class="earth-fallback" src="assets/earth.jpg" alt="Mapa da superfície da Terra" width="2048" height="1024">
+          <canvas id="earth-canvas" aria-hidden="true"></canvas>
+          <span class="earth-index" aria-hidden="true">EXPLORAR / DESCOBRIR / APRENDER</span>
+        </div>
+      </div>
+      <div class="container hero-bottom"><span>ENSINO + EXPLORAÇÃO</span><div class="scroll-hint"><span class="scroll-track" aria-hidden="true"></span>Role para explorar o mundo</div><span class="hero-bottom-right">GEOEDUCA / PROJETO EDUCACIONAL</span></div>
+    </section>
+
+    <section class="intro-band" aria-label="Áreas da plataforma"><div class="container intro-grid">
+      <div><span class="number">01</span><p><strong>Organize suas aulas.</strong><span>Turmas, alunos e conteúdos.</span></p></div>
+      <div><span class="number">02</span><p><strong>Aprenda explorando.</strong><span>Geografia que convida a participar.</span></p></div>
+      <div><span class="number">03</span><p><strong>Acompanhe os resultados.</strong><span>Atividades e avaliações em um só lugar.</span></p></div>
+    </div></section>
+
+    <section class="section resources" id="recursos" aria-labelledby="resources-title">
+      <div class="container">
+        <div class="section-heading reveal"><div><p class="eyebrow">PARA QUEM ENSINA</p><h2 id="resources-title">Mais espaço para ensinar.<br>Mais caminhos para aprender.</h2></div><p>Reúna a organização das turmas, os conteúdos e as avaliações no mesmo ambiente.</p></div>
+        <div class="teacher-layout">
+          <div class="resource-list">
+            <article class="resource-row reveal"><span class="icon-box"><svg class="icon"><use href="#i-users"/></svg></span><div><h3>Turmas e alunos</h3><p>Cadastre alunos, organize as salas e distribua atividades para as turmas.</p></div><span class="row-number">01</span></article>
+            <article class="resource-row reveal"><span class="icon-box"><svg class="icon"><use href="#i-book"/></svg></span><div><h3>Conteúdo em diferentes formatos</h3><p>Compartilhe tarefas, vídeos, infográficos e links para complementar suas aulas.</p></div><span class="row-number">02</span></article>
+            <article class="resource-row reveal"><span class="icon-box"><svg class="icon"><use href="#i-check"/></svg></span><div><h3>Quizzes e provas</h3><p>Crie quizzes e avaliações com questões objetivas ou discursivas.</p></div><span class="row-number">03</span></article>
+            <article class="resource-row reveal"><span class="icon-box"><svg class="icon"><use href="#i-chart"/></svg></span><div><h3>Resultados para acompanhar</h3><p>Consulte respostas, pontuações e o desempenho nas avaliações.</p></div><span class="row-number">04</span></article>
+          </div>
+          <aside class="feature-preview reveal" aria-label="Visão dos recursos para professores">
+            <div class="preview-top"><svg class="icon"><use href="#i-globe"/></svg><span>ÁREA DO PROFESSOR</span><span class="preview-label">RECURSOS</span></div>
+            <h3>Sua próxima aula<br>começa aqui.</h3><p>Do planejamento à participação dos alunos.</p>
+            <div class="preview-options"><div><svg class="icon"><use href="#i-users"/></svg><span>Organizar turmas</span><span>01</span></div><div><svg class="icon"><use href="#i-book"/></svg><span>Publicar atividades</span><span>02</span></div><div><svg class="icon"><use href="#i-check"/></svg><span>Criar avaliações</span><span>03</span></div><div><svg class="icon"><use href="#i-chart"/></svg><span>Consultar resultados</span><span>04</span></div></div>
+            <span class="preview-footnote">ENSINAR. CONECTAR. ACOMPANHAR.</span>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section student-section" aria-labelledby="student-title"><div class="container">
+      <div class="section-heading reveal"><div><p class="eyebrow">PARA QUEM APRENDE</p><h2 id="student-title">Conhecer o Brasil<br>também pode ser um desafio.</h2></div><p>Atividades e jogos para explorar capitais, regiões, biomas, rios e fronteiras. Cada desafio é uma nova forma de revisar o conteúdo.</p></div>
+      <div class="games-grid">
+        <article class="game-card reveal"><div class="game-card-top"><span>CAPITAIS & REGIÕES</span><svg class="icon"><use href="#i-pin"/></svg></div><div class="game-word" aria-hidden="true">BR<span>27</span></div><h3>De estado em estado.</h3><p>Encontre a Capital, Quiz de Siglas e Ordenando por Região conectam nomes e lugares.</p><div class="game-card-footer">LOCALIZAÇÃO / TERRITÓRIO</div></article>
+        <article class="game-card green-card reveal"><div class="game-card-top"><span>BIOMAS & HIDROGRAFIA</span><svg class="icon"><use href="#i-map"/></svg></div><div class="game-word" aria-hidden="true">BIO<span>MAS</span></div><h3>Um país, muitas paisagens.</h3><p>Explore as características dos biomas e os rios brasileiros com jogos de memória e identificação.</p><div class="game-card-footer">NATUREZA / PAISAGEM</div></article>
+        <article class="game-card guessr-card reveal"><div class="game-card-top"><span>BRAZILGUESSR</span><svg class="icon"><use href="#i-globe"/></svg></div><div class="game-word" aria-hidden="true">ONDE<span>ESTOU?</span></div><h3>Olhe ao redor. Descubra.</h3><p>Explore cenários pelo Street View e use as pistas da paisagem para localizar-se no Brasil.</p><div class="game-card-footer">OBSERVAÇÃO / EXPLORAÇÃO</div></article>
+      </div>
+      <div class="student-note reveal"><svg class="icon"><use href="#i-game"/></svg><p>Também há caça-palavras, desafios de orientação e fronteiras com cronômetro, além de pontuação e ranking da turma.</p></div>
+    </div></section>
+
+    <section class="section how-section" id="como-funciona" aria-labelledby="how-title"><div class="container">
+      <div class="section-heading reveal"><div><p class="eyebrow">COMO FUNCIONA</p><h2 id="how-title">Da sua aula<br>à descoberta do aluno.</h2></div><p>Professor e aluno têm seus próprios espaços, conectados pelas atividades da turma.</p></div>
+      <ol class="steps"><li class="reveal"><span class="step-number">01</span><h3>Organize a turma</h3><p>Crie a sala e cadastre os alunos que participarão das aulas.</p></li><li class="reveal"><span class="step-number">02</span><h3>Prepare a experiência</h3><p>Disponibilize conteúdos, tarefas, quizzes e provas.</p></li><li class="reveal"><span class="step-number">03</span><h3>Convide à participação</h3><p>Os alunos acessam as atividades e exploram os jogos de geografia.</p></li><li class="reveal"><span class="step-number">04</span><h3>Acompanhe a turma</h3><p>Consulte os resultados para apoiar as próximas aulas.</p></li></ol>
+    </div></section>
+
+    <section class="project-section section" id="projeto" aria-labelledby="project-title"><div class="container project-layout">
+      <div class="project-heading reveal"><p class="eyebrow light">O PROJETO GEOEDUCA</p><h2 id="project-title">Tecnologia com<br>um destino:<br><span class="gold-text">a educação.</span></h2><div class="project-seal"><svg class="icon"><use href="#i-globe"/></svg><span>GEOGRAFIA<br>E TECNOLOGIA</span></div></div>
+      <div class="project-copy reveal"><span class="project-kicker">APRENDER É EXPLORAR.</span><p class="large-copy">O GEOEDUCA nasceu como um projeto de TCC para aproximar o ensino de geografia das possibilidades da tecnologia.</p><p>A proposta reúne ferramentas de organização para professores e experiências interativas para alunos. Conteúdos, avaliações e jogos fazem parte de um mesmo percurso de aprendizagem.</p><p>Nosso objetivo é apoiar o trabalho em sala de aula e despertar a curiosidade sobre o território, as paisagens e as relações que fazem parte da geografia.</p><a class="text-link light-link" href="#recursos">Explore os recursos do projeto</a></div>
+    </div></section>
+
+    <section class="section pricing-section" id="precos" aria-labelledby="pricing-title"><div class="container">
+      <div class="section-heading reveal"><div><p class="eyebrow">PLANOS E PREÇOS</p><h2 id="pricing-title">Uma nova perspectiva<br>para suas aulas.</h2></div><p>Escolha a assinatura mensal ou economize no anual: 12 meses de acesso pelo valor de 10 mensalidades.</p></div>
+      <div class="billing-controls reveal"><fieldset class="billing-switch"><legend class="sr-only">Período de cobrança</legend><label><input type="radio" name="billing-period" value="monthly" checked><span>Mensal</span></label><label><input type="radio" name="billing-period" value="annual"><span>Anual</span></label></fieldset><span class="annual-badge">Economize 16,7% no anual</span></div>
+      <div class="pricing-grid">
+        <article class="pricing-card reveal" data-plan="professor"><span class="pricing-icon"><svg class="icon"><use href="#i-book"/></svg></span><p class="eyebrow">PARA O DIA A DIA DOCENTE</p><h3>Professor</h3><p>Para usar o GEOEDUCA nas suas aulas de geografia.</p><div class="plan-price" aria-live="polite" aria-atomic="true"><p class="price-amount"><span class="price-currency">R$</span><span data-price-amount>29,90</span><span class="price-period" data-price-period>/mês</span></p><p class="price-caption" data-price-caption>Ou R$ 299,00 por ano, pago antecipadamente.</p></div><p class="plan-condition">Limites de uso e condições de contratação em definição.</p><a class="button button-navy" href="#contratacao">Condições de contratação</a></article>
+        <article class="pricing-card school-plan reveal" data-plan="escola"><span class="pricing-icon"><svg class="icon"><use href="#i-users"/></svg></span><p class="eyebrow">PARA O AMBIENTE ESCOLAR</p><h3>Escola</h3><p>Para levar a proposta do GEOEDUCA ao contexto da escola.</p><div class="plan-price" aria-live="polite" aria-atomic="true"><p class="price-amount"><span class="price-currency">R$</span><span data-price-amount>149,90</span><span class="price-period" data-price-period>/mês</span></p><p class="price-caption" data-price-caption>Ou R$ 1.499,00 por ano, pago antecipadamente.</p></div><p class="plan-condition">Número de professores e alunos e condições em definição.</p><a class="button button-outline" href="#contratacao">Condições de contratação</a></article>
+      </div>
+      <p class="annual-note">O plano anual é pago antecipadamente. O equivalente mensal é apresentado apenas para comparação.</p>
+    </div></section>
+
+    <section class="section faq-section" aria-labelledby="faq-title"><div class="container faq-layout"><div class="reveal"><p class="eyebrow">DÚVIDAS FREQUENTES</p><h2 id="faq-title">Antes de<br>começar.</h2></div><div class="faq-list reveal">
+      <details><summary>Para quem é o GEOEDUCA?<span aria-hidden="true">+</span></summary><p>Para professores e alunos que utilizam atividades, avaliações e jogos no ensino e na aprendizagem de geografia.</p></details>
+      <details><summary>O professor pode criar seus próprios conteúdos?<span aria-hidden="true">+</span></summary><p>Sim. A plataforma possui ferramentas para criar atividades, compartilhar links, vídeos e infográficos, elaborar quizzes e montar provas.</p></details>
+      <details><summary>Como o aluno acessa a plataforma?<span aria-hidden="true">+</span></summary><p>Na tela de acesso, o aluno seleciona seu perfil e utiliza o RM e a senha do cadastro organizado pelo professor.</p></details>
+      <details><summary>O GEOEDUCA substitui o professor?<span aria-hidden="true">+</span></summary><p>A proposta é apoiar o trabalho do professor. Ele organiza as turmas, seleciona os conteúdos e acompanha as avaliações.</p></details>
+      <details id="contratacao"><summary>Quanto custa e como contratar?<span aria-hidden="true">+</span></summary><p>O plano Professor custa R$ 29,90 por mês ou R$ 299,00 por ano. O plano Escola custa R$ 149,90 por mês ou R$ 1.499,00 por ano. A assinatura anual é paga antecipadamente e equivale a 10 mensalidades. Os limites de uso e as condições de contratação ainda estão sendo definidos. A contratação online ainda não está disponível nesta página.</p></details>
+    </div></div></section>
+
+    <section class="closing-section"><div class="container closing-inner reveal"><div><p class="eyebrow light">O PRÓXIMO PASSO É EXPLORAR.</p><h2>A geografia vai além do mapa.</h2></div><a class="button button-gold" href="../index.html" data-platform-link>Acessar plataforma</a></div></section>
+  </main>
+  <footer><div class="container footer-top"><a class="brand" href="#inicio"><svg class="icon brand-icon"><use href="#i-globe"/></svg><span>GEO<span class="brand-accent">EDUCA</span></span></a><p>Ensino de geografia. Experiências que conectam.</p></div><div class="container footer-bottom"><span>© <span id="year">2026</span> GEOEDUCA</span><span>Projeto educacional desenvolvido como TCC.</span><a href="#inicio">Voltar ao início</a></div></footer>
+</body>
+</html>
