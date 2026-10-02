@@ -6,6 +6,7 @@ const GEOEDUCA_CONFIG = Object.freeze({
 
 (() => {
   'use strict';
+  document.documentElement.classList.add('js-enabled');
   document.querySelectorAll('[data-platform-link]').forEach(link => {
     link.href = GEOEDUCA_CONFIG.platformUrl;
   });
@@ -33,12 +34,21 @@ const GEOEDUCA_CONFIG = Object.freeze({
   document.addEventListener('click', event => {
     if (!nav.contains(event.target) && !menuButton.contains(event.target)) closeMenu();
   });
-  window.matchMedia('(min-width: 851px)').addEventListener('change', closeMenu);
+  const compactMenu = window.matchMedia('(max-width: 1100px)');
+  compactMenu.addEventListener('change', () => {
+    const focusWasInNav = nav.contains(document.activeElement);
+    const focusWasOnButton = document.activeElement === menuButton;
+    closeMenu();
+    if (compactMenu.matches && focusWasInNav) menuButton.focus();
+    else if (!compactMenu.matches && focusWasOnButton) nav.querySelector('a').focus();
+  });
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const gsapAvailable = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
   if (gsapAvailable) {
     gsap.registerPlugin(ScrollTrigger);
+    if (document.fonts) document.fonts.ready.then(() => ScrollTrigger.refresh());
+    window.addEventListener('load', () => ScrollTrigger.refresh());
     gsap.to('.reading-progress', { width: '100%', ease: 'none', scrollTrigger: {trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: true} });
     const motions = gsap.matchMedia();
     motions.add('(prefers-reduced-motion: no-preference)', () => {
@@ -49,30 +59,83 @@ const GEOEDUCA_CONFIG = Object.freeze({
     });
   }
 
-  // Valores aprovados. A alternância é informativa e não processa pagamentos.
-  const planValues = {professor: {monthly: 29.90, annual: 299}, escola: {monthly: 149.90, annual: 1499}};
-  const formatPrice = value => value.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-  document.querySelectorAll('input[name="billing-period"]').forEach(input => {
-    input.addEventListener('change', () => {
-      if (!input.checked) return;
-      const annual = input.value === 'annual';
-      document.querySelectorAll('[data-plan]').forEach(card => {
-        const values = planValues[card.dataset.plan];
-        card.querySelector('[data-price-amount]').textContent = formatPrice(annual ? values.annual : values.monthly);
-        card.querySelector('[data-price-period]').textContent = annual ? '/ano' : '/mês';
-        card.querySelector('[data-price-caption]').textContent = annual
-          ? `Pago antecipadamente. Equivale a R$ ${formatPrice(values.annual / 12)} por mês.`
-          : `Ou R$ ${formatPrice(values.annual)} por ano, pago antecipadamente.`;
-        if (gsapAvailable && !reducedMotion.matches) {
-          gsap.fromTo(card.querySelector('.plan-price'), {opacity: .5, y: 6}, {opacity: 1, y: 0, duration: .3, overwrite: true, clearProps: 'transform,opacity'});
+  // Simulador informativo: a contratação não é processada nesta página.
+  (() => {
+    const calculator = document.querySelector('.pricing-calculator');
+    if (!calculator || typeof GEOEDUCA_PRICING === 'undefined') return;
+    const countInput = document.getElementById('student-count');
+    countInput.readOnly = false;
+    const promotion = document.getElementById('launch-promotion');
+    const error = document.getElementById('student-error');
+    const billingInputs = document.querySelectorAll('input[name="billing-period"]');
+    const presets = document.querySelectorAll('[data-student-preset]');
+    const currency = calculator.querySelector('[data-price-currency]');
+    const amount = calculator.querySelector('[data-price-amount]');
+    const period = calculator.querySelector('[data-price-period]');
+    const caption = calculator.querySelector('[data-price-caption]');
+    const saving = calculator.querySelector('[data-price-saving]');
+    const breakdown = calculator.querySelector('[data-price-breakdown]');
+    const quoteDetails = calculator.querySelector('.quote-details');
+    const money = cents => (cents / 100).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    function update(animate = false) {
+      const annual = [...billingInputs].some(input => input.checked && input.value === 'annual');
+      if (annual) promotion.checked = false;
+      const quantity = Number(countInput.value);
+      const quote = GEOEDUCA_PRICING.quote(quantity, {annual,launch: promotion.checked});
+      const priced = quote.kind === 'priced';
+      const invalid = quote.kind === 'invalid';
+      promotion.disabled = annual || !priced;
+      error.hidden = !invalid;
+      countInput.setAttribute('aria-invalid', String(invalid));
+      countInput.setCustomValidity(invalid ? 'Informe uma quantidade inteira de alunos, maior que zero.' : '');
+      presets.forEach(button => button.setAttribute('aria-pressed', String(!invalid && Number(button.dataset.studentPreset) === quantity)));
+      calculator.querySelector('[data-quote-title]').textContent = invalid ? 'SUA ESTIMATIVA' : `SUA ESTIMATIVA / ${quantity.toLocaleString('pt-BR')} ${quantity === 1 ? 'ALUNO' : 'ALUNOS'}`;
+      currency.hidden = !priced;
+      period.textContent = priced ? annual ? '/ano' : '/mês' : '';
+      amount.classList.toggle('is-custom', !priced);
+      breakdown.hidden = !priced;
+      quoteDetails.hidden = !priced;
+      saving.hidden = !priced;
+      if (!priced) {
+        amount.textContent = invalid ? '—' : 'Personalizado';
+        caption.textContent = invalid ? 'Informe uma quantidade válida para calcular.' : 'Acima de 1.000 alunos, o valor será definido em uma proposta personalizada após a avaliação do uso.';
+      } else {
+        amount.textContent = money(quote.priceCents);
+        if (annual) {
+          caption.textContent = `Pago antecipadamente. Equivale a R$ ${money(quote.annualEquivalentCents)} por mês, para comparação.`;
+          saving.textContent = `Economia de R$ ${money(quote.annualSavingsCents)} em relação a 12 mensalidades regulares.`;
+        } else if (quote.launchApplied) {
+          caption.textContent = `Valor nas três primeiras mensalidades. Depois, R$ ${money(quote.regularMonthlyCents)}/mês. Mínimo mensal de R$ 29,90 respeitado.`;
+          saving.textContent = `Economia de R$ ${money(quote.launchSavingsCents)} nas três primeiras mensalidades. Promoção exclusiva do mensal.`;
+          if (quote.launchSavingsCents === 0) {
+            caption.textContent = 'A mensalidade mínima de R$ 29,90 já se aplica a esta quantidade. A promoção não reduz o valor abaixo desse mínimo.';
+            saving.hidden = true;
+          }
+        } else {
+          caption.textContent = `Ou R$ ${money(quote.annualCents)} por ano, pago antecipadamente.`;
+          saving.textContent = `Economia de R$ ${money(quote.annualSavingsCents)} ao escolher o anual.`;
         }
-      });
-    });
-  });
-  document.querySelectorAll('a[href="#contratacao"]').forEach(link => link.addEventListener('click', () => {
-    document.getElementById('contratacao').open = true;
-  }));
-
+        quote.parts.forEach((part,index) => {
+          const row = calculator.querySelector(`[data-tier="${index}"]`);
+          row.hidden = part.quantity === 0;
+          row.querySelector('[data-tier-label]').textContent = `${part.quantity.toLocaleString('pt-BR')} ${part.quantity === 1 ? 'aluno' : 'alunos'} × R$ ${money(part.rateCents)}`;
+          row.querySelector('[data-tier-total]').textContent = `R$ ${money(part.subtotalCents)}`;
+        });
+        calculator.querySelector('[data-minimum-adjustment]').hidden = quote.minimumAdjustmentCents === 0;
+        calculator.querySelector('[data-minimum-total]').textContent = `R$ ${money(quote.minimumAdjustmentCents)}`;
+        calculator.querySelector('[data-regular-total]').textContent = `R$ ${money(quote.regularMonthlyCents)}`;
+      }
+      if (animate && gsapAvailable && !reducedMotion.matches) gsap.fromTo(calculator.querySelector('.plan-price'), {opacity: .6,y: 5}, {opacity: 1,y: 0,duration: .25,overwrite: true,clearProps: 'transform,opacity'});
+    }
+    countInput.addEventListener('input', () => update());
+    billingInputs.forEach(input => input.addEventListener('change', () => update(true)));
+    promotion.addEventListener('change', () => update(true));
+    presets.forEach(button => button.addEventListener('click', () => {
+      countInput.value = button.dataset.studentPreset;
+      update(true);
+    }));
+    update();
+  })();
   // Fundo abstrato de linhas e pontos: anima somente as seções visíveis.
   (() => {
     const layers = [];
@@ -80,8 +143,11 @@ const GEOEDUCA_CONFIG = Object.freeze({
     let lastFrame = 0;
     let elapsed = 0;
     const darkSections = new Set(['hero', 'project-section', 'closing-section']);
+    const lightEffects = window.matchMedia('(max-width: 850px), (pointer: coarse)');
+    const pointCount = () => lightEffects.matches ? 10 : 24;
     function paint(layer, time) {
-      const {ctx, width: w, height: h, dark, points} = layer;
+      const {ctx, width: w, height: h, points} = layer;
+      const dark = layer.dark || document.documentElement.dataset.theme === 'dark';
       if (!w || !h) return;
       ctx.clearRect(0, 0, w, h);
       ctx.lineWidth = .75;
@@ -89,16 +155,16 @@ const GEOEDUCA_CONFIG = Object.freeze({
       const pointColor = dark ? 'rgba(204,164,59,0.60)' : 'rgba(35,59,11,0.18)';
       // Traços contínuos sugerem uma malha cartográfica em movimento.
       ctx.strokeStyle = lineColor;
-      for (let line = 0; line < 11; line++) {
+      for (let line = 0; line < (lightEffects.matches ? 8 : 11); line++) {
         ctx.beginPath();
         for (let x = -40; x <= w + 40; x += 20) {
           const wave = Math.sin(x / Math.max(w, 1) * Math.PI * 2 + time * .12 + line * .38);
-          const y = h * (line + .3) / 10 + wave * Math.min(42, h * .05) + Math.cos(time * .16 + line) * 12;
+          const y = h * (line + .3) / (lightEffects.matches ? 7 : 10) + wave * Math.min(42, h * .05) + Math.cos(time * .16 + line) * 12;
           if (x === -40) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
         ctx.stroke();
       }
-      const positions = points.map(point => ({x: (point.x + Math.sin(time * .13 + point.phase) * .035) * w, y: (point.y + Math.cos(time * .11 + point.phase) * .035) * h}));
+      const positions = points.slice(0, pointCount()).map(point => ({x: (point.x + Math.sin(time * .13 + point.phase) * .035) * w, y: (point.y + Math.cos(time * .11 + point.phase) * .035) * h}));
       ctx.strokeStyle = dark ? 'rgba(204,164,59,0.12)' : 'rgba(11,10,50,0.045)';
       for (let i = 0; i < positions.length; i++) {
         const a = positions[i];
@@ -114,7 +180,7 @@ const GEOEDUCA_CONFIG = Object.freeze({
     function frame(timestamp) {
       frameHandle = 0;
       if (reducedMotion.matches || document.hidden || !layers.some(layer => layer.visible)) {lastFrame = 0; return;}
-      if (!lastFrame || timestamp - lastFrame >= 33) {
+      if (!lastFrame || timestamp - lastFrame >= (lightEffects.matches ? 50 : 33)) {
         elapsed += lastFrame ? Math.min((timestamp - lastFrame) / 1000, .06) : 0;
         lastFrame = timestamp;
         layers.filter(layer => layer.visible).forEach(layer => paint(layer, elapsed));
@@ -135,11 +201,15 @@ const GEOEDUCA_CONFIG = Object.freeze({
       entries.forEach(entry => {
         const layer = layers.find(item => item.section === entry.target);
         if (!layer) return;
-        layer.width = Math.ceil(entry.contentRect.width);
-        // contentRect exclui padding: o canvas precisa cobrir toda a seção.
-        layer.height = Math.ceil(layer.section.getBoundingClientRect().height);
-        layer.canvas.width = layer.width;
-        layer.canvas.height = layer.height;
+        const bounds = layer.section.getBoundingClientRect();
+        layer.width = Math.ceil(bounds.width);
+        layer.height = Math.ceil(bounds.height);
+        if (!layer.width || !layer.height) return;
+        // Limita a memória do fundo, mesmo em seções longas no celular.
+        const scale = Math.min(1, 1600 / layer.height, Math.sqrt(1000000 / (layer.width * layer.height)));
+        layer.canvas.width = Math.max(1, Math.round(layer.width * scale));
+        layer.canvas.height = Math.max(1, Math.round(layer.height * scale));
+        layer.ctx.setTransform(layer.canvas.width / layer.width, 0, 0, layer.canvas.height / layer.height, 0, 0);
         paint(layer, elapsed);
       });
       start();
@@ -151,7 +221,7 @@ const GEOEDUCA_CONFIG = Object.freeze({
       if (!ctx) return;
       section.classList.add('ambient-surface');
       section.prepend(background);
-      const points = Array.from({length: window.innerWidth < 601 ? 10 : 24}, (_, i) => ({x: ((i * .618033 + index * .11) % 1), y: ((i * .414213 + .15) % 1), phase: i * 1.8 + index}));
+      const points = Array.from({length: 24}, (_, i) => ({x: ((i * .618033 + index * .11) % 1), y: ((i * .414213 + .15) % 1), phase: i * 1.8 + index}));
       layers.push({section, canvas: background, ctx, points, width: 0, height: 0, visible: false, dark: [...darkSections].some(name => section.classList.contains(name))});
       observer.observe(section); resizeObserver.observe(section);
     });
@@ -162,9 +232,11 @@ const GEOEDUCA_CONFIG = Object.freeze({
       start();
     };
     reducedMotion.addEventListener('change', updateMotion);
+    lightEffects.addEventListener('change', updateMotion);
     document.addEventListener('visibilitychange', updateMotion);
     window.addEventListener('pagehide', () => {if (frameHandle) cancelAnimationFrame(frameHandle); frameHandle = 0;});
     window.addEventListener('pageshow', start);
+    window.addEventListener('geoeduca:themechange', updateMotion);
   })();
 
   // Interações de mouse complementam o conteúdo; não substituem o teclado.
@@ -198,7 +270,11 @@ const GEOEDUCA_CONFIG = Object.freeze({
 
   const canvas = document.getElementById('earth-canvas');
   const sceneElement = document.querySelector('.earth-scene');
-  if (typeof window.THREE === 'undefined') return;
+  if (typeof window.THREE === 'undefined') {
+    canvas.hidden = true;
+    sceneElement.setAttribute('aria-label', 'Representação da superfície terrestre');
+    return;
+  }
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({canvas, alpha: true, antialias: true, powerPreference: 'low-power'});
@@ -207,7 +283,6 @@ const GEOEDUCA_CONFIG = Object.freeze({
     sceneElement.setAttribute('aria-label', 'Representação da superfície terrestre');
     return;
   }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(36, 1, .1, 30);
@@ -238,6 +313,7 @@ const GEOEDUCA_CONFIG = Object.freeze({
   function resize() {
     const {width, height} = sceneElement.getBoundingClientRect();
     if (!width || !height) return;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, window.matchMedia('(max-width: 850px), (pointer: coarse)').matches ? 1.25 : 1.5));
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
@@ -260,37 +336,37 @@ const GEOEDUCA_CONFIG = Object.freeze({
   });
   if (gsapAvailable) {
     const motions = gsap.matchMedia();
-    motions.add({desktop: '(min-width: 851px)', mobile: '(max-width: 850px)', motion: '(prefers-reduced-motion: no-preference)'}, context => {
-      const {desktop, motion} = context.conditions;
-      if (!motion) return;
+    motions.add('(prefers-reduced-motion: no-preference)', () => {
       gsap.to(earth.rotation, {y: -0.70 + Math.PI * 2.5, ease: 'none', onUpdate: () => {
         canvas.dataset.rotation = earth.rotation.y.toFixed(3);
         render();
       }, scrollTrigger: {
-        trigger: '.hero', start: desktop ? 'top top' : 'top top',
-        end: desktop ? '+=700' : 'bottom top',
-        pin: desktop, pinSpacing: true, scrub: 1.15, anticipatePin: 1,
+        trigger: '.hero', start: 'top top',
+        end: 'bottom top',
+        pin: false, scrub: 1.15,
         invalidateOnRefresh: true
       }});
       return () => {earth.rotation.y = -0.70; render();};
     });
-  } else if (!reducedMotion.matches) {
+  } else {
     // Fallback sem GSAP: o globo continua acompanhando o scroll.
     let scheduled = false;
     window.addEventListener('scroll', () => {
-      if (scheduled) return;
+      if (scheduled || reducedMotion.matches) return;
       scheduled = true;
       requestAnimationFrame(() => {
         earth.rotation.y = -0.70 + window.scrollY * .007;
         render(); scheduled = false;
       });
     }, {passive: true});
+    reducedMotion.addEventListener('change', () => {
+      if (reducedMotion.matches) {earth.rotation.y = -0.70; render();}
+    });
   }
   canvas.addEventListener('webglcontextlost', event => {
     event.preventDefault();
     sceneElement.classList.remove('is-ready');
     canvas.hidden = true;
   });
-  document.fonts.ready.then(() => {resize(); if (gsapAvailable) ScrollTrigger.refresh();});
-  window.addEventListener('load', () => {if (gsapAvailable) ScrollTrigger.refresh();});
+  if (document.fonts) document.fonts.ready.then(resize);
 })();
