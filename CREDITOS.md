@@ -8,3 +8,5 @@
 - Space Grotesk e Inter: Google Fonts, fontes incluídas localmente com as respectivas licenças SIL Open Font License. Repositório: https://github.com/google/fonts
 
 O material não presume endosso dos mantenedores das dependências.
+
+- Copero: mascote original do GEOEDUCA, imagem fornecida pelo usuário em 02/10/2026; incluída sem alterações.

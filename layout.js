@@ -4,6 +4,8 @@
   const sections = [...document.querySelectorAll('main > section')];
   const desktop = window.matchMedia('(min-width: 851px)');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const header = document.getElementById('header');
+  const navigationOffset = () => header && getComputedStyle(header).position === 'fixed' ? header.getBoundingClientRect().height : 0;
   let fitFrame = 0;
   function fitSections() {
     fitFrame = 0;
@@ -11,7 +13,7 @@
       const content = section.querySelector('.container');
       if (!content) return;
       const style = getComputedStyle(section);
-      const viewport = parseFloat(style.minHeight) || window.innerHeight;
+      const viewport = parseFloat(style.minHeight) || window.innerHeight - (section.id === 'inicio' ? 0 : navigationOffset());
       const padding = (parseFloat(style.paddingTop) || 0) + (parseFloat(style.paddingBottom) || 0);
       const overflowing = desktop.matches && content.scrollHeight > viewport - padding + 2;
       section.classList.toggle('section-overflow', overflowing);
@@ -38,7 +40,8 @@
     const destination = target.closest('main > section') || target;
     fitSections();
     if (typeof window.ScrollTrigger !== 'undefined') window.ScrollTrigger.refresh();
-    destination.scrollIntoView({block: 'start', inline: 'nearest', behavior: smooth && !reducedMotion.matches ? 'smooth' : 'auto'});
+    const top = destination.id === 'inicio' ? 0 : Math.max(0, destination.getBoundingClientRect().top + window.scrollY - navigationOffset());
+    window.scrollTo({top, behavior: smooth && !reducedMotion.matches ? 'smooth' : 'auto'});
     // Mantém o foco fora do menu recolhido e na seção que será lida.
     if (!destination.hasAttribute('tabindex')) destination.setAttribute('tabindex', '-1');
     destination.focus({preventScroll: true});

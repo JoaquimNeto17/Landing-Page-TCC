@@ -24,11 +24,14 @@ const GEOEDUCA_PRICING = Object.freeze({
     const launchApplied = Boolean(launch && !annual);
     const launchMonthlyCents = Math.max(this.minimumMonthlyCents,Math.round(regularMonthlyCents * (100 - this.launchPercent) / 100));
     const annualCents = regularMonthlyCents * this.annualMonthsCharged;
+    // Rejeita apenas quantidades que não permitam cálculos exatos em centavos.
+    if (!Number.isSafeInteger(regularMonthlyCents * 12)) return {kind: 'invalid'};
     return {
       kind: 'priced',studentCount,parts,annual,launchApplied,
       minimumAdjustmentCents: regularMonthlyCents - subtotalCents,
       regularMonthlyCents,annualCents,
       annualEquivalentCents: Math.round(annualCents / 12),
+      perStudentMonthlyCents: Math.round((annual ? annualCents / 12 : launchApplied ? launchMonthlyCents : regularMonthlyCents) / studentCount),
       annualSavingsCents: regularMonthlyCents * 12 - annualCents,
       launchSavingsCents: (regularMonthlyCents - launchMonthlyCents) * this.launchMonths,
       priceCents: annual ? annualCents : launchApplied ? launchMonthlyCents : regularMonthlyCents

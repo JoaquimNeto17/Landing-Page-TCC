@@ -1,15 +1,8 @@
-/* GEOEDUCA landing page — configuração de integração */
-const GEOEDUCA_CONFIG = Object.freeze({
-  // A pasta landing fica dentro de frontend; o login existente continua em frontend/index.html.
-  platformUrl: '../index.html'
-});
-
+/* GEOEDUCA landing page — interações e animações. */
 (() => {
   'use strict';
   document.documentElement.classList.add('js-enabled');
-  document.querySelectorAll('[data-platform-link]').forEach(link => {
-    link.href = GEOEDUCA_CONFIG.platformUrl;
-  });
+  // Os links de acesso usam diretamente o href do HTML, sem reescrita por JavaScript.
   document.getElementById('year').textContent = new Date().getFullYear();
   const menuButton = document.querySelector('.menu-toggle');
   const nav = document.getElementById('navigation');
@@ -49,13 +42,10 @@ const GEOEDUCA_CONFIG = Object.freeze({
     gsap.registerPlugin(ScrollTrigger);
     if (document.fonts) document.fonts.ready.then(() => ScrollTrigger.refresh());
     window.addEventListener('load', () => ScrollTrigger.refresh());
-    gsap.to('.reading-progress', { width: '100%', ease: 'none', scrollTrigger: {trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: true} });
     const motions = gsap.matchMedia();
     motions.add('(prefers-reduced-motion: no-preference)', () => {
       gsap.from('.hero-copy > *', {opacity: 0, y: 22, duration: .8, stagger: .09, ease: 'power2.out', clearProps: 'all'});
-      document.querySelectorAll('.reveal').forEach(element => {
-        gsap.from(element, {y: 24, opacity: 0, duration: .7, ease: 'power2.out', clearProps: 'all', scrollTrigger: {trigger: element, start: 'top 92%', once: true}});
-      });
+
     });
   }
 
@@ -73,6 +63,7 @@ const GEOEDUCA_CONFIG = Object.freeze({
     const amount = calculator.querySelector('[data-price-amount]');
     const period = calculator.querySelector('[data-price-period]');
     const caption = calculator.querySelector('[data-price-caption]');
+    const perStudent = calculator.querySelector('[data-price-per-student]');
     const saving = calculator.querySelector('[data-price-saving]');
     const breakdown = calculator.querySelector('[data-price-breakdown]');
     const quoteDetails = calculator.querySelector('.quote-details');
@@ -96,11 +87,13 @@ const GEOEDUCA_CONFIG = Object.freeze({
       breakdown.hidden = !priced;
       quoteDetails.hidden = !priced;
       saving.hidden = !priced;
+      perStudent.hidden = !priced;
       if (!priced) {
         amount.textContent = invalid ? '—' : 'Personalizado';
-        caption.textContent = invalid ? 'Informe uma quantidade válida para calcular.' : 'Acima de 1.000 alunos, o valor será definido em uma proposta personalizada após a avaliação do uso.';
+        caption.textContent = invalid ? 'Informe uma quantidade inteira válida para calcular.' : 'Acima de 1.000 alunos, o valor será definido em uma proposta personalizada após a avaliação do uso.';
       } else {
         amount.textContent = money(quote.priceCents);
+        perStudent.textContent = `Equivale a R$ ${money(quote.perStudentMonthlyCents)} por aluno/mês${annual ? ", para comparação" : quote.launchApplied ? " nas três primeiras mensalidades" : ""}.`;
         if (annual) {
           caption.textContent = `Pago antecipadamente. Equivale a R$ ${money(quote.annualEquivalentCents)} por mês, para comparação.`;
           saving.textContent = `Economia de R$ ${money(quote.annualSavingsCents)} em relação a 12 mensalidades regulares.`;
@@ -258,13 +251,6 @@ const GEOEDUCA_CONFIG = Object.freeze({
         magnetListeners.push(() => {button.removeEventListener('pointermove', onMove); button.removeEventListener('pointerleave', onLeave);});
       });
       return () => magnetListeners.forEach(remove => remove());
-    });
-    interactionMedia.add('(prefers-reduced-motion: no-preference)', () => {
-      gsap.from('.steps .step-number', {scale: .78, duration: .65, stagger: .1, ease: 'back.out(1.3)', scrollTrigger: {trigger: '.steps', start: 'top 85%', once: true}});
-      document.querySelectorAll('.game-word').forEach(word => {
-        gsap.fromTo(word, {y: 10}, {y: -10, ease: 'none', scrollTrigger: {trigger: word.closest('.game-card'), start: 'top bottom', end: 'bottom top', scrub: 1}});
-      });
-      gsap.from('.preview-options > div', {x: 18, duration: .65, stagger: .1, ease: 'power2.out', clearProps: 'x', scrollTrigger: {trigger: '.preview-options', start: 'top 88%', once: true}});
     });
   }
 
