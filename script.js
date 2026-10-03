@@ -2,6 +2,60 @@
 (() => {
   'use strict';
   document.documentElement.classList.add('js-enabled');
+  // Galeria de capturas reais: seleção manual, teclado e movimento reduzido.
+  (() => {
+    const gallery = document.querySelector('.platform-gallery');
+    if (!gallery) return;
+    const tabList = gallery.querySelector('[data-gallery-tabs]');
+    const tabs = [...tabList.querySelectorAll('button')];
+    const panels = [...gallery.querySelectorAll('[data-gallery-panel]')];
+    if (!tabs.length || tabs.length !== panels.length || tabs.some((tab, index) => tab.getAttribute('aria-controls') !== panels[index].id)) return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let selected = 0;
+    function clearMotion() {
+      if (window.gsap) window.gsap.killTweensOf(panels);
+      panels.forEach(panel => {
+        panel.style.opacity = '';
+        panel.style.transform = '';
+      });
+    }
+    function select(index, focus = false, animate = true) {
+      const changed = index !== selected;
+      clearMotion();
+      selected = index;
+      tabs.forEach((tab, current) => {
+        tab.setAttribute('aria-selected', String(current === index));
+        tab.tabIndex = current === index ? 0 : -1;
+        panels[current].hidden = current !== index;
+      });
+      if (focus) tabs[index].focus({preventScroll: true});
+      if (changed && animate && !reduced.matches && window.gsap) {
+        window.gsap.fromTo(panels[index], {opacity: 0, y: 6}, {opacity: 1, y: 0, duration: .22, ease: 'power2.out', overwrite: true, clearProps: 'opacity,transform'});
+      }
+    }
+    tabList.setAttribute('role', 'tablist');
+    tabList.setAttribute('aria-label', 'Telas da área do aluno');
+    tabs.forEach((tab, index) => {
+      tab.setAttribute('role', 'tab');
+      panels[index].setAttribute('role', 'tabpanel');
+      panels[index].setAttribute('aria-labelledby', tab.id);
+      panels[index].tabIndex = 0;
+      tab.addEventListener('click', () => select(index));
+      tab.addEventListener('keydown', event => {
+        let next;
+        if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+        else if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = tabs.length - 1;
+        else return;
+        event.preventDefault();
+        select(next, true);
+      });
+    });
+    reduced.addEventListener('change', () => {if (reduced.matches) clearMotion();});
+    select(0, false, false);
+    tabList.hidden = false;
+  })();
   // Solicitações assistidas: prepara a mensagem; o visitante conclui o envio no aplicativo.
   (() => {
     const dialog = document.getElementById('request-dialog');

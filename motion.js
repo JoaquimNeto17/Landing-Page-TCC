@@ -64,6 +64,7 @@
     });
     reveal('.intro-grid > div', {group: true});
     reveal('.resource-row', {group: true});
+    reveal('.platform-gallery', {y: 14});
     reveal('.game-card', {group: true});
     reveal('.mascot-intro', {y: 18});
     reveal('.steps > li', {group: true});

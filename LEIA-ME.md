@@ -168,6 +168,17 @@ A abertura agora oferece “Solicitar uma demonstração”, mantendo “Ver pre
 
 O formulário apresenta três etapas curtas — solicitação, conversa e combinação do acesso — e um resumo separado das condições. Campos, botões e textos foram ajustados para celular e para os dois temas. A FAQ explica demonstração, liberação manual e definição do início da cobrança durante o contato. Não foram inventados prazo, período gratuito ou confirmação de envio. As entradas GSAP ficaram mais curtas; movimento reduzido, navegação, preços e contatos seguem preservados.
 
-A galeria de Turmas, Resultados e Jogos depende das três capturas reais da plataforma. O repositório consultado não contém screenshots e os anexos atuais contêm referências da landing, do cálculo e do mascote. A galeria não está incluída nesta atualização; não foram publicadas imagens fictícias como se fossem telas reais.
+A proposta inicial de galeria ficou aguardando capturas reais nesta etapa. A atualização seguinte, descrita abaixo, utiliza Jogos, Ranking e Jogo da Bandeira da área do aluno, conforme os três prints enviados.
 
 Arquivos desta etapa: `index.html`, `styles.css`, `script.js`, `motion.js` e `LEIA-ME.md`. Substitua os cinco na pasta da landing e recarregue com Ctrl+F5. O pacote inclui também o formulário da etapa anterior, caso ela ainda não tenha sido publicada. Sintaxe, mensagens, preços e comportamento da navegação são conferidos sem navegador; a inspeção visual real e o clique nos aplicativos na publicação permanecem pendentes.
+
+
+## Galeria real da área do aluno — 03/10/2026
+
+Incluídas as três capturas fornecidas: Jogos, Ranking e Jogo da Bandeira. Elas aparecem na seção de jogos, ao lado dos cards no notebook e acima deles nas telas menores. A moldura identifica a área do aluno; os prints não são apresentados como telas de turmas ou resultados do professor. As imagens PNG são cópias integrais dos arquivos enviados, sem alterar os pixels, as informações ou o conteúdo.
+
+A seleção é manual, com abas acessíveis por clique, setas esquerda/direita, Home e End. O foco segue a aba selecionada; apenas seu painel fica visível. “Ver imagem completa” abre o PNG original em outra guia. A troca tem uma entrada GSAP curta, retirada na preferência de movimento reduzido. Não há rotação automática. Sem JavaScript, os três prints aparecem em sequência e os controles de abas ficam ocultos.
+
+Em notebooks de até 850px de altura, o enquadramento usa uma imagem inteira de até 240px de altura e mantém a opção de abrir o tamanho original. No celular, a galeria usa a largura disponível e os cards ficam abaixo. Se o conteúdo ultrapassar a área útil da tela, o ajuste existente permite que a seção cresça, preservando todo o conteúdo. As imagens permanecem com suas cores originais nos dois temas; a moldura, abas e legendas acompanham o tema.
+
+Arquivos desta entrega: `index.html`, `styles.css`, `script.js`, `motion.js`, `LEIA-ME.md` e a nova pasta `assets/screenshots/` com `jogos.png`, `ranking.png` e `bandeiras.png`. Substitua os arquivos e copie a pasta mantendo essa estrutura. Os valores, contatos, formulários, Terra e Copero continuam preservados. As imagens e as interações foram conferidas em testes estáticos/DOM simulado. A inspeção visual no navegador da publicação continua pendente.

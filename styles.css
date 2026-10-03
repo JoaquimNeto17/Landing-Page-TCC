@@ -3120,3 +3120,63 @@ html{
   .hero-actions{flex-direction:column;align-items:flex-start;gap:10px}
   .hero-actions .button-gold{width:100%;padding-inline:16px}
 }
+
+
+/* Capturas reais do aluno: moldura discreta, seleção manual e imagens integrais. */
+.student-showcase-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,1fr);gap:28px;align-items:center}
+.student-showcase-layout>*{min-width:0}
+.platform-gallery{overflow:hidden;border:1px solid var(--card-border);border-radius:var(--card-radius);background:var(--card-surface);box-shadow:var(--card-shadow)}
+.gallery-window{display:flex;align-items:center;gap:16px;min-height:38px;padding:10px 16px;border-bottom:1px solid var(--card-border);background:var(--surface-raised);color:var(--muted);font-size:.6875rem;letter-spacing:.02em}
+.gallery-window-dots{display:flex;gap:5px;flex-shrink:0}
+.gallery-window-dots i{width:6px;height:6px;border-radius:50%;background:var(--muted);opacity:.45}
+.gallery-tabs{display:flex;flex-wrap:wrap;gap:4px;padding:6px 10px;border-bottom:1px solid var(--card-border);background:var(--card-surface)}
+.gallery-tabs button{min-height:44px;padding:10px 12px;border:1px solid transparent;border-radius:7px;background:transparent;color:var(--muted);font-size:.8125rem;font-weight:600;line-height:1.4;cursor:pointer}
+.gallery-tabs button[aria-selected=true]{background:var(--surface-raised);border-color:var(--card-border);color:var(--ink)}
+.gallery-tabs button:hover{color:var(--ink)}
+.gallery-tabs button:focus-visible{outline-offset:-3px}
+.gallery-stage figure{margin:0}
+.gallery-stage figure+figure{border-top:1px solid var(--card-border)}
+.gallery-image-link{display:block;background:#f4f4f2}
+.gallery-image-link:focus-visible{outline-offset:-4px}
+.gallery-image{display:block;width:100%;height:auto;object-fit:contain}
+.gallery-stage figcaption{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px;border-top:1px solid var(--card-border);background:var(--card-surface)}
+.gallery-stage figcaption h3{font-size:1rem;font-weight:600;line-height:1.4;margin-bottom:5px;color:var(--ink)}
+.gallery-stage figcaption p{font-size:.8125rem;line-height:1.55;color:var(--muted)}
+.gallery-stage figcaption>a{display:inline-flex;align-items:center;gap:6px;min-height:44px;font-size:.75rem;font-weight:600;color:var(--card-accent);flex-shrink:0;text-decoration:underline;text-underline-offset:3px}
+.student-showcase-layout .games-grid{grid-template-columns:minmax(0,1fr);gap:12px}
+.student-showcase-layout .game-card{padding:18px 20px;border-top-width:2px}
+.student-showcase-layout .game-card .game-card-top{min-height:22px;margin-bottom:10px;font-size:.6875rem}
+.student-showcase-layout .game-card .game-card-top .icon{width:21px;height:21px}
+.student-showcase-layout .game-card h3{font-size:1rem;margin-bottom:7px}
+.student-showcase-layout .game-card p{font-size:.8125rem;line-height:1.6}
+@media(min-width:1101px) and (max-height:850px){
+  main>section.student-section{padding-block:24px}
+  .student-section .section-heading{margin-bottom:20px;gap:24px}
+  .student-section .section-heading h2{font-size:clamp(1.8rem,2.6vw,2.1rem)}
+  .student-section .section-heading .eyebrow{margin-bottom:8px;font-size:.6875rem}
+  .student-section .section-heading>p{font-size:.875rem;line-height:1.55}
+  .student-showcase-layout{gap:24px}
+  .student-showcase-layout .game-card{padding:12px 18px}
+  .student-showcase-layout .game-card .game-card-top{margin-bottom:8px}
+  .gallery-image{max-height:240px}
+  .gallery-stage figcaption{padding:12px 16px}
+  .student-section .mascot-intro{grid-template-columns:72px minmax(0,1fr);padding:10px 18px;gap:18px;margin-top:16px}
+  .student-section .mascot-portrait{width:72px}
+  .student-section .mascot-copy p{font-size:.8125rem;line-height:1.55}
+  .student-section .mascot-copy h3{font-size:1.0625rem}
+}
+@media(max-width:1100px){
+  .student-showcase-layout{grid-template-columns:minmax(0,1fr);gap:24px}
+  .platform-gallery{width:100%;max-width:820px;margin-inline:auto}
+  .student-showcase-layout .games-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .gallery-image{max-height:none}
+}
+@media(max-width:700px){
+  .student-showcase-layout .games-grid{grid-template-columns:minmax(0,1fr);gap:12px}
+  .gallery-stage figcaption{align-items:flex-start;flex-direction:column;gap:6px;padding:14px 16px}
+  .gallery-stage figcaption>a{min-height:44px}
+  .gallery-tabs{gap:3px;padding:6px}
+  .gallery-tabs button{padding-inline:10px;font-size:.75rem}
+  .gallery-window{gap:12px;padding-inline:12px}
+  .student-showcase-layout .game-card{padding:18px 20px}
+}

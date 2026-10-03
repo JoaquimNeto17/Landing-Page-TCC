@@ -8,14 +8,14 @@
   <title>GEOEDUCA — Geografia em movimento</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <script src="theme.js"></script>
-  <link rel="stylesheet" href="styles.css?v=20261003-visual-conversion">
+  <link rel="stylesheet" href="styles.css?v=20261003-student-gallery">
   <script defer src="assets/vendor/three.min.js"></script>
   <script defer src="assets/vendor/gsap.min.js"></script>
   <script defer src="assets/vendor/ScrollTrigger.min.js"></script>
   <script defer src="assets/earth-data.js"></script>
   <script defer src="pricing.js"></script>
-  <script defer src="script.js?v=20261003-visual-conversion"></script>
-  <script defer src="motion.js?v=20261003-visual-conversion"></script>
+  <script defer src="script.js?v=20261003-student-gallery"></script>
+  <script defer src="motion.js?v=20261003-student-gallery"></script>
   <script defer src="layout.js"></script>
 </head>
 <body>
@@ -86,10 +86,34 @@
 
     <section class="section student-section" id="jogos" aria-labelledby="student-title"><div class="container">
       <div class="section-heading reveal"><div><p class="eyebrow">PARA QUEM APRENDE</p><h2 id="student-title">Geografia para<br>aprender explorando.</h2></div><p>Jogos para revisar capitais, regiões, biomas, rios e fronteiras.</p></div>
+      <div class="student-showcase-layout">
+        <div class="platform-gallery reveal" aria-label="Capturas reais da área do aluno">
+          <div class="gallery-window"><span class="gallery-window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>GEOEDUCA · Área do aluno</span></div>
+          <div class="gallery-tabs" data-gallery-tabs hidden>
+            <button type="button" id="gallery-tab-games" aria-controls="gallery-games">Jogos</button>
+            <button type="button" id="gallery-tab-ranking" aria-controls="gallery-ranking">Ranking</button>
+            <button type="button" id="gallery-tab-flags" aria-controls="gallery-flags">Jogo da Bandeira</button>
+          </div>
+          <div class="gallery-stage">
+            <figure id="gallery-games" data-gallery-panel>
+              <a class="gallery-image-link" href="assets/screenshots/jogos.png" target="_blank" rel="noopener" aria-label="Abrir captura dos jogos em tamanho original, em uma nova guia"><img class="gallery-image" src="assets/screenshots/jogos.png" alt="Captura da área do aluno com os jogos Memória dos Biomas e Ordenando por Região, além das opções de mascote" width="1847" height="916" loading="lazy" decoding="async"></a>
+              <figcaption><div><h3>Jogos educativos</h3><p>Atividades de geografia e um mascote para acompanhar o aluno.</p></div><a href="assets/screenshots/jogos.png" target="_blank" rel="noopener" aria-label="Ver imagem completa dos jogos, em uma nova guia">Ver imagem completa <span aria-hidden="true">↗</span></a></figcaption>
+            </figure>
+            <figure id="gallery-ranking" data-gallery-panel>
+              <a class="gallery-image-link" href="assets/screenshots/ranking.png" target="_blank" rel="noopener" aria-label="Abrir captura do ranking em tamanho original, em uma nova guia"><img class="gallery-image" src="assets/screenshots/ranking.png" alt="Captura do ranking na área do aluno, com o quadro de líderes e as opções Minha Turma e Global Escola" width="1851" height="917" loading="lazy" decoding="async"></a>
+              <figcaption><div><h3>Ranking da turma</h3><p>A pontuação dos alunos reunida em um quadro de líderes.</p></div><a href="assets/screenshots/ranking.png" target="_blank" rel="noopener" aria-label="Ver imagem completa do ranking, em uma nova guia">Ver imagem completa <span aria-hidden="true">↗</span></a></figcaption>
+            </figure>
+            <figure id="gallery-flags" data-gallery-panel>
+              <a class="gallery-image-link" href="assets/screenshots/bandeiras.png" target="_blank" rel="noopener" aria-label="Abrir captura do Jogo da Bandeira em tamanho original, em uma nova guia"><img class="gallery-image" src="assets/screenshots/bandeiras.png" alt="Captura do jogo que pergunta qual estado possui a bandeira apresentada, com quatro alternativas" width="1846" height="917" loading="lazy" decoding="async"></a>
+              <figcaption><div><h3>Jogo da Bandeira</h3><p>Reconheça o estado pela bandeira e escolha a alternativa.</p></div><a href="assets/screenshots/bandeiras.png" target="_blank" rel="noopener" aria-label="Ver imagem completa do Jogo da Bandeira, em uma nova guia">Ver imagem completa <span aria-hidden="true">↗</span></a></figcaption>
+            </figure>
+          </div>
+        </div>
       <div class="games-grid">
         <article class="game-card reveal"><div class="game-card-top"><span>LOCALIZAÇÃO</span><svg class="icon"><use href="#i-pin"/></svg></div><h3>Capitais e regiões</h3><p>Explore estados e capitais com Encontre a Capital, Quiz de Siglas e Ordenando por Região.</p></article>
         <article class="game-card green-card reveal"><div class="game-card-top"><span>NATUREZA</span><svg class="icon"><use href="#i-map"/></svg></div><h3>Biomas e rios</h3><p>Conheça os biomas e rios brasileiros em jogos de memória e identificação.</p></article>
         <article class="game-card guessr-card reveal"><div class="game-card-top"><span>OBSERVAÇÃO</span><svg class="icon"><use href="#i-globe"/></svg></div><h3>BrazilGuessr</h3><p>Observe cenários pelo Street View e use a paisagem para descobrir onde está no Brasil.</p></article>
+      </div>
       </div>
       <aside class="mascot-intro reveal" aria-labelledby="copero-title">
         <div class="mascot-portrait"><img src="assets/copero.png" alt="Copero, mascote do GEOEDUCA: uma capivara dourada sorridente" width="589" height="592" loading="lazy" decoding="async"></div>
