@@ -1,6 +1,6 @@
 # GEOEDUCA — Landing page
 
-Página independente em HTML, CSS e JavaScript, baseada nos recursos do repositório `fonseca-felix/new-tcc`. O modelo mantém os valores aprovados: três faixas de R$ 2,00, R$ 1,50 e R$ 1,20 por aluno/mês. A imagem enviada é referência do método progressivo de cálculo, não uma nova tabela de preços. O mínimo mensal e os descontos anual e de lançamento foram mantidos. O simulador substitui os preços fixos anteriores de Professor e Escola. A contratação online permanece indisponível.
+Página independente em HTML, CSS e JavaScript, baseada nos recursos do repositório `fonseca-felix/new-tcc`. O modelo mantém os valores aprovados: três faixas de R$ 2,00, R$ 1,50 e R$ 1,20 por aluno/mês. A imagem enviada é referência do método progressivo de cálculo, não uma nova tabela de preços. O mínimo mensal e os descontos anual e de lançamento foram mantidos. O simulador substitui os preços fixos anteriores de Professor e Escola. As solicitações de acesso e demonstração são encaminhadas por WhatsApp ou e-mail; a liberação e as condições são combinadas manualmente.
 
 ## Visualizar
 
@@ -18,7 +18,7 @@ Abra `http://localhost:8080`.
 
 Copie o conteúdo desta pasta para `frontend/landing/` do projeto. O login existente permanece em `frontend/index.html`. A landing ficará em `/landing/`.
 
-Os botões “Acessar plataforma” no cabeçalho e “Conhecer a plataforma” na abertura usam `https://geoeduca-uh27.onrender.com/` diretamente em seus atributos `href`. Para alterar o endereço, atualize os dois links marcados com `data-platform-link` em `index.html`. O JavaScript não reescreve o destino. Os links de acesso também funcionam sem JavaScript.
+O botão “Acessar plataforma” no cabeçalho usa `https://geoeduca-uh27.onrender.com/` diretamente em seu atributo `href`. Para alterar o endereço, atualize esse link marcado com `data-platform-link` em `index.html`. O JavaScript não reescreve o destino. A abertura e o final usam “Solicitar uma demonstração”, com formulário e alternativa de contato direto sem JavaScript.
 
 Ao abrir o pacote isolado, os botões de acesso levam à plataforma online e precisam de conexão com a internet. A página não cria contas, não processa pagamentos nem modifica o sistema existente.
 
@@ -44,7 +44,7 @@ O simulador é informativo. Ele não implementa cobrança, controle de vagas, fa
 
 - `index.html`: conteúdo, seções e navegação.
 - `styles.css`: identidade visual e responsividade.
-- `script.js`: menu móvel, configuração de acesso, interface do simulador, fundo animado, Terra e interação dos botões.
+- `script.js`: menu móvel, formulário de solicitação, interface do simulador, fundo animado, Terra e interação dos botões.
 - `motion.js`: entradas das seções e barra discreta de progresso sob o cabeçalho.
 - `pricing.js`: faixas, mínimos, descontos e cálculo monetário em centavos.
 - `theme.js`: restauração e alternância do modo claro/escuro.
@@ -149,3 +149,25 @@ Os botões do cabeçalho e da abertura abrem https://geoeduca-uh27.onrender.com/
 Removida a reescrita dos links pelo JavaScript. O destino dos dois botões de acesso fica no HTML. A referência de `script.js` inclui uma versão na URL para evitar reutilizar a configuração antiga após a substituição dos arquivos. Substitua juntos `index.html`, `script.js` e `LEIA-ME.md` e recarregue a página com Ctrl+F5.
 
 O endereço da plataforma e `/index.html` responderam com HTTP 200 na conferência desta atualização. O aviso do Three.js vem de `console.warn` na distribuição antiga incluída; não é uma exceção e não cancela a navegação dos links. A biblioteca permanece intacta nesta correção. A hipótese de cache depende dos arquivos efetivamente servidos na hospedagem; o clique na versão publicada ainda precisa ser conferido no navegador.
+
+
+## Contratação assistida — 03/10/2026
+
+O resultado do simulador usa “Solicitar acesso”; o final usa “Solicitar uma demonstração”. Ambos abrem um formulário compacto com nome, e-mail, perfil (professor/escola) e quantidade de alunos. A quantidade é obrigatória para acesso e opcional para demonstração. O cabeçalho continua com o link direto da plataforma. O formulário respeita os modos claro/escuro e possui layout de uma coluna no celular.
+
+“Continuar no WhatsApp” abre uma mensagem para +55 (15) 99681-7066. “Usar e-mail” abre o aplicativo de e-mail com destino joaquim.neto.senai@gmail.com, assunto e mensagem preparados. Nome, e-mail, perfil, alunos e estimativa são incluídos. A estimativa utiliza as mesmas regras de `pricing.js`, com mensal/anual e promoção selecionados no simulador. A quantidade pode ser ajustada no formulário; o orçamento é recalculado. Acima de 1.000 alunos, a mensagem pede proposta personalizada, sem atribuir uma tarifa. Ao pedir uma demonstração sem informar quantidade, o plano fica a combinar.
+
+O visitante precisa revisar e enviar a mensagem no aplicativo. A página não confirma envio, não armazena esses dados em banco nem os envia em segundo plano, não cria contas, não cobra e não libera acesso automaticamente. O aplicativo de e-mail precisa estar configurado para usar mailto. Sem JavaScript ou sem suporte ao diálogo, os botões levam diretamente ao WhatsApp com mensagem genérica; o e-mail também fica disponível na FAQ. Nenhuma solicitação real foi enviada durante os testes.
+
+Substitua juntos `index.html`, `styles.css`, `script.js` e `LEIA-ME.md`. HTML e referências de CSS/script incluem as alterações; recarregue com Ctrl+F5. As regras de preço e os demais assets permanecem válidos. Sintaxe, campos, links, mensagens e estados de orçamento são verificados em testes sem navegador. A aparência e o clique na versão publicada precisam ser conferidos no navegador.
+
+
+## Refinamento visual e conversão — 03/10/2026
+
+A abertura agora oferece “Solicitar uma demonstração”, mantendo “Ver preços” e o acesso direto da header. Refinados o equilíbrio entre título e Terra no notebook, o espaçamento da abertura, alinhamentos/tipografia dos cards e contraste da estimativa. O botão “Solicitar acesso” fica imediatamente depois do orçamento; a composição do preço continua acessível abaixo.
+
+O formulário apresenta três etapas curtas — solicitação, conversa e combinação do acesso — e um resumo separado das condições. Campos, botões e textos foram ajustados para celular e para os dois temas. A FAQ explica demonstração, liberação manual e definição do início da cobrança durante o contato. Não foram inventados prazo, período gratuito ou confirmação de envio. As entradas GSAP ficaram mais curtas; movimento reduzido, navegação, preços e contatos seguem preservados.
+
+A galeria de Turmas, Resultados e Jogos depende das três capturas reais da plataforma. O repositório consultado não contém screenshots e os anexos atuais contêm referências da landing, do cálculo e do mascote. A galeria não está incluída nesta atualização; não foram publicadas imagens fictícias como se fossem telas reais.
+
+Arquivos desta etapa: `index.html`, `styles.css`, `script.js`, `motion.js` e `LEIA-ME.md`. Substitua os cinco na pasta da landing e recarregue com Ctrl+F5. O pacote inclui também o formulário da etapa anterior, caso ela ainda não tenha sido publicada. Sintaxe, mensagens, preços e comportamento da navegação são conferidos sem navegador; a inspeção visual real e o clique nos aplicativos na publicação permanecem pendentes.

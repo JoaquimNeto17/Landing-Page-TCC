@@ -51,16 +51,16 @@
       const elements = Array.from(document.querySelectorAll(selector));
       if (!elements.length) return;
       const {group = false, ...motion} = options;
-      const settings = {opacity: 0, y: 18, duration: .65, ease: 'power2.out', clearProps: 'opacity,transform', ...motion};
+      const settings = {opacity: 0, y: 14, duration: .55, ease: 'power2.out', clearProps: 'opacity,transform', ...motion};
       if (group) {
-        gsap.from(elements, {...settings, stagger: .09, scrollTrigger: {trigger: elements[0].parentElement, start: 'top 86%', once: true}});
+        gsap.from(elements, {...settings, stagger: .07, scrollTrigger: {trigger: elements[0].parentElement, start: 'top 86%', once: true}});
       } else {
         elements.forEach(element => gsap.from(element, {...settings, scrollTrigger: {trigger: element, start: 'top 88%', once: true}}));
       }
     }
     document.querySelectorAll('.section-heading').forEach(heading => {
       const children = heading.querySelectorAll('.eyebrow, h2, :scope > p');
-      gsap.from(children, {opacity: 0, y: 18, duration: .7, stagger: .1, ease: 'power2.out', clearProps: 'opacity,transform', scrollTrigger: {trigger: heading, start: 'top 86%', once: true}});
+      gsap.from(children, {opacity: 0, y: 16, duration: .6, stagger: .08, ease: 'power2.out', clearProps: 'opacity,transform', scrollTrigger: {trigger: heading, start: 'top 86%', once: true}});
     });
     reveal('.intro-grid > div', {group: true});
     reveal('.resource-row', {group: true});

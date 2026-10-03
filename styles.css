@@ -3006,3 +3006,117 @@ html{
     gap:14px
   }
 }
+
+
+/* Solicitação compacta: abre somente quando o visitante inicia o contato. */
+.request-dialog:not([open]){display:none}
+.request-dialog{
+  width:min(640px,calc(100% - 32px));
+  max-height:calc(100vh - 32px);
+  max-height:calc(100dvh - 32px);
+  margin:auto;
+  padding:28px;
+  border:1px solid var(--card-border);
+  border-radius:var(--card-radius);
+  color:var(--ink);
+  background:var(--card-surface);
+  box-shadow:0 24px 80px #0005;
+  overflow:auto;
+  overscroll-behavior:contain;
+  font-family:var(--body)
+}
+.request-dialog::backdrop{background:#050b18b8}
+.request-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.request-heading h2{font-size:clamp(1.6rem,4vw,2rem);letter-spacing:-.035em;padding-top:5px}
+.request-close{display:grid;place-items:center;flex-shrink:0;width:44px;height:44px;border:1px solid var(--card-border);border-radius:8px;background:var(--surface-raised);color:var(--ink);cursor:pointer}
+.request-dialog>p{margin-top:12px;color:var(--muted);font-size:.9375rem}
+.request-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}
+.request-field{min-width:0}
+.request-field label{display:block;margin-bottom:7px;font-size:.875rem;font-weight:600}
+.request-field input,.request-field select{width:100%;min-height:48px;min-width:0;border:1px solid var(--card-border);border-radius:8px;background:var(--surface);color:var(--ink);padding:11px 12px;font:inherit;font-size:1rem}
+.request-field input:focus-visible,.request-field select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.request-field input[aria-invalid=true]{border-color:#a43535}
+.request-quote{margin-top:20px;padding:14px 16px;border:1px solid var(--card-border);border-radius:8px;background:var(--surface-raised);color:var(--ink);font-size:.875rem;line-height:1.6}
+.request-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.request-actions .button{cursor:pointer;transform:none;min-height:48px}
+.request-actions .button-outline{border-color:var(--card-border);background:transparent;color:var(--ink)}
+.request-actions .button-outline:hover{background:var(--surface-raised)}
+.request-dialog .request-note,.request-dialog .request-status{margin-top:14px;color:var(--muted);font-size:.8125rem;line-height:1.6}
+.request-status:empty{display:none}
+.request-email-link{color:var(--ink);text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+[data-theme=dark] .request-actions .button-navy{background:var(--gold);color:var(--navy)}
+[data-theme=dark] .request-field input[aria-invalid=true]{border-color:#ee9e9e}
+@media(max-width:600px){
+  .request-dialog{width:calc(100% - 24px);max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);padding:20px}
+  .request-fields{grid-template-columns:1fr;gap:14px;margin-top:18px}
+  .request-actions{flex-direction:column}
+  .request-actions .button{width:100%}
+}
+
+
+/* Refinamento aprovado: abertura, cards, estimativa e contratação assistida. */
+.hero-copy{max-width:630px}
+.hero h1{font-size:clamp(3.3rem,5.2vw,4.8rem);line-height:1.08;letter-spacing:-.06em}
+.hero .eyebrow{margin-bottom:26px}
+.hero-description{max-width:470px;margin-top:28px;line-height:1.75}
+.hero-actions{gap:26px;margin-top:36px;flex-wrap:wrap}
+.hero-actions .button-gold{min-height:56px;padding-inline:26px;box-shadow:0 8px 26px #cca43b1c}
+.hero-actions .text-link{min-height:44px;display:inline-flex;align-items:center}
+.resource-row{align-items:start;gap:20px}
+.resource-row .icon-box{flex-shrink:0}
+.resource-row h3,.game-card h3,.steps h3{font-weight:600;line-height:1.35}
+.resource-row h3{margin-bottom:8px}
+.resource-row p,.game-card p,.steps p{font-size:.9375rem;line-height:1.7}
+.games-grid{align-items:stretch}
+.game-card{gap:0}
+.game-card .game-card-top{margin-bottom:22px;align-items:center}
+.game-card h3{min-height:1.35em}
+.calculator-result .plan-price{padding-top:4px;margin-bottom:18px}
+.calculator-result .price-amount{align-items:baseline;gap:5px}
+.calculator-result .price-amount [data-price-amount]{font-weight:600;font-size:clamp(2.35rem,4vw,3.25rem);letter-spacing:-.055em}
+.calculator-result>.button-navy{width:100%;min-height:52px}
+.calculator-disclaimer{margin-top:12px;color:var(--muted);max-width:54ch}
+.calculator-result .quote-details{margin:20px 0 0}
+.request-dialog{width:min(660px,calc(100% - 32px));padding:32px}
+.request-heading h2{font-weight:600;max-width:470px}
+.request-process{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:10px;margin:22px 0 0;padding:0;list-style:none}
+.request-process li{display:flex;align-items:center;gap:8px;padding-top:12px;border-top:1px solid var(--card-border);font-size:.8125rem;line-height:1.4;color:var(--muted);min-width:0}
+.request-process span{font-family:var(--display);color:var(--card-accent);font-size:.75rem}
+.request-fields{gap:20px;margin-top:26px}
+.request-field input,.request-field select{min-height:50px}
+.request-estimate{margin-top:24px;padding:16px 18px;border:1px solid var(--card-border);border-radius:10px;background:var(--surface-raised)}
+.request-estimate-label{font-size:.6875rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.request-estimate .request-quote{padding:0;margin:0;border:0;background:transparent;font-size:.875rem;line-height:1.65}
+.request-actions{margin-top:24px;gap:12px}
+.request-actions .button-navy{flex:1;min-height:52px}
+.request-dialog .request-note{margin-top:16px;font-size:.8125rem}
+@media(min-width:1101px){
+  .hero .hero-layout{grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:16px;padding-bottom:64px}
+  .earth-scene{width:min(100%,640px);max-height:640px;left:0;justify-self:center}
+}
+@media(max-width:1100px) and (min-width:851px){
+  .hero h1{font-size:clamp(3rem,5.5vw,4rem)}
+  .hero-actions{gap:16px}
+  .hero-actions .button-gold{padding-inline:20px}
+}
+@media(max-width:850px){
+  .hero h1{font-size:clamp(2.5rem,7.5vw,3.65rem)}
+  .hero .eyebrow{margin-bottom:20px}
+  .hero-description{margin-top:20px}
+  .hero-actions{margin-top:26px;gap:18px}
+  .hero-actions .button-gold{min-height:52px}
+  .resource-row{gap:16px}
+}
+@media(max-width:600px){
+  .request-dialog{width:calc(100% - 24px);padding:22px}
+  .request-fields{gap:16px;margin-top:22px}
+  .request-process{gap:8px;margin-top:20px}
+  .request-process li{display:block;font-size:.75rem;line-height:1.5}
+  .request-process span{display:block;margin-bottom:3px}
+  .request-estimate{margin-top:22px;padding:14px}
+  .request-actions .button{flex:none;min-height:52px}
+}
+@media(max-width:420px){
+  .hero-actions{flex-direction:column;align-items:flex-start;gap:10px}
+  .hero-actions .button-gold{width:100%;padding-inline:16px}
+}

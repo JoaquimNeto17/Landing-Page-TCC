@@ -8,14 +8,14 @@
   <title>GEOEDUCA — Geografia em movimento</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <script src="theme.js"></script>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20261003-visual-conversion">
   <script defer src="assets/vendor/three.min.js"></script>
   <script defer src="assets/vendor/gsap.min.js"></script>
   <script defer src="assets/vendor/ScrollTrigger.min.js"></script>
   <script defer src="assets/earth-data.js"></script>
   <script defer src="pricing.js"></script>
-  <script defer src="script.js?v=20261002-direct-access"></script>
-  <script defer src="motion.js"></script>
+  <script defer src="script.js?v=20261003-visual-conversion"></script>
+  <script defer src="motion.js?v=20261003-visual-conversion"></script>
   <script defer src="layout.js"></script>
 </head>
 <body>
@@ -53,7 +53,7 @@
           <p class="eyebrow light"><span class="small-line"></span> GEOGRAFIA EM MOVIMENTO</p>
           <h1 id="hero-title">O mundo é a sua<br><span class="gold-text">sala de aula.</span></h1>
           <p class="hero-description">Organize turmas, crie atividades e acompanhe seus alunos em uma plataforma de geografia para professores e escolas.</p>
-          <div class="hero-actions"><a class="button button-gold" href="https://geoeduca-uh27.onrender.com/" data-platform-link>Conhecer a plataforma</a><a class="text-link light-link" href="#precos">Ver preços</a></div>
+          <div class="hero-actions"><a class="button button-gold" href="https://wa.me/5515996817066?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20uma%20demonstra%C3%A7%C3%A3o%20do%20GEOEDUCA." data-request-kind="demo">Solicitar uma demonstração</a><a class="text-link light-link" href="#precos">Ver preços</a></div>
         </div>
         <div class="earth-scene" aria-label="Globo terrestre tridimensional cuja rotação acompanha a rolagem da página" role="img">
           <div class="earth-orbit orbit-one" aria-hidden="true"></div><div class="earth-orbit orbit-two" aria-hidden="true"></div>
@@ -112,7 +112,7 @@
       <div class="pricing-calculator reveal" aria-label="Simulador de assinatura">
         <div class="calculator-controls">
           <div class="student-field">
-            <label for="student-count">Quantidade de alunos contratados</label>
+            <label for="student-count">Quantidade de alunos</label>
             <input id="student-count" name="students" type="number" min="1" step="1" inputmode="numeric" value="300" readonly aria-describedby="student-help student-error">
             <p id="student-help">Simule até 1.000 alunos. Acima disso, proposta personalizada.</p>
             <p id="student-error" class="field-error" role="alert" hidden>Informe uma quantidade inteira de alunos, maior que zero.</p>
@@ -137,6 +137,8 @@
             <p class="price-caption" data-price-caption>Ou R$ 5.000,00 por ano, pago antecipadamente.</p>
             <p class="price-saving" data-price-saving>Economia de R$ 1.000,00 ao escolher o anual.</p>
           </div>
+          <a class="button button-navy" href="https://wa.me/5515996817066?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20acesso%20ao%20GEOEDUCA%20e%20conversar%20sobre%20o%20plano%20para%20minha%20turma%20ou%20escola." data-request-kind="access">Solicitar acesso</a>
+          <p class="calculator-disclaimer">O valor apresentado é uma estimativa. Solicite acesso para conhecer a plataforma e combinar as condições de contratação.</p>
           <details class="quote-details"><summary>Ver composição do preço<span aria-hidden="true">+</span></summary><div data-price-breakdown>
             <table class="tier-table"><caption>Composição da mensalidade regular</caption><colgroup><col><col class="tier-total-column"></colgroup><thead><tr><th scope="col">Faixa de alunos</th><th scope="col">Subtotal</th></tr></thead><tbody>
               <tr data-tier="0"><th scope="row"><span data-tier-label>100 alunos × R$ 2,00</span></th><td data-tier-total>R$ 200,00</td></tr>
@@ -146,8 +148,6 @@
             </tbody><tfoot><tr><th scope="row">Mensalidade regular</th><td data-regular-total>R$ 500,00</td></tr></tfoot></table>
           </div>
           </details>
-          <a class="button button-navy" href="#contratacao">Ver condições de contratação</a>
-          <p class="calculator-disclaimer">Simulação informativa. A contratação online ainda não está disponível nesta página.</p>
         </div>
       </div>
     </div></section>
@@ -157,11 +157,31 @@
       <details><summary>O professor pode criar seus próprios conteúdos?<span aria-hidden="true">+</span></summary><p>Sim. A plataforma possui ferramentas para criar atividades, compartilhar links, vídeos e infográficos, elaborar quizzes e montar provas.</p></details>
       <details><summary>Como o aluno acessa a plataforma?<span aria-hidden="true">+</span></summary><p>Na tela de acesso, o aluno seleciona seu perfil e utiliza o RM e a senha do cadastro organizado pelo professor.</p></details>
       <details><summary>O GEOEDUCA substitui o professor?<span aria-hidden="true">+</span></summary><p>A proposta é apoiar o trabalho do professor. Ele organiza as turmas, seleciona os conteúdos e acompanha as avaliações.</p></details>
-      <details id="contratacao"><summary>Quanto custa e como contratar?<span aria-hidden="true">+</span></summary><p>Use o simulador para consultar o valor por quantidade de alunos. As faixas, descontos e condições estão na seção de preços. Acima de 1.000 alunos, é necessária uma proposta personalizada. A contratação online ainda não está disponível nesta página.</p></details>
+      <details id="contratacao"><summary>Quanto custa e como contratar?<span aria-hidden="true">+</span></summary><p>Simule o valor por quantidade de alunos e clique em “Solicitar acesso” para conversar sobre sua turma ou escola. Acima de 1.000 alunos, o valor depende de uma proposta personalizada. Você também pode escrever para <a class="request-email-link" href="mailto:joaquim.neto.senai@gmail.com">joaquim.neto.senai@gmail.com</a>.</p></details>
+      <details><summary>Como funciona a demonstração?<span aria-hidden="true">+</span></summary><p>Solicite uma demonstração pelo formulário e envie a mensagem pelo WhatsApp ou e-mail. Durante o contato, combinamos a apresentação da plataforma e conversamos sobre sua necessidade.</p></details>
+      <details><summary>Como o acesso é liberado?<span aria-hidden="true">+</span></summary><p>A liberação é organizada manualmente após o contato, com as condições combinadas antes. Nesta etapa, o acesso não depende de confirmação automática de pagamento.</p></details>
+      <details><summary>Quando começa a cobrança?<span aria-hidden="true">+</span></summary><p>O início da cobrança, a forma de pagamento e as condições de contratação são combinados diretamente antes da liberação. Enviar uma solicitação não gera cobrança automática.</p></details>
     </div></div></section>
 
-    <section class="closing-section" id="explorar"><div class="container closing-inner reveal"><div><p class="eyebrow light">O PRÓXIMO PASSO É EXPLORAR.</p><h2>Seu próximo destino:<br>uma aula mais interativa.</h2></div><a class="button button-gold" href="#precos">Simular meu plano</a></div></section>
+    <section class="closing-section" id="explorar"><div class="container closing-inner reveal"><div><p class="eyebrow light">O PRÓXIMO PASSO É EXPLORAR.</p><h2>Seu próximo destino:<br>uma aula mais interativa.</h2></div><a class="button button-gold" href="https://wa.me/5515996817066?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20uma%20demonstra%C3%A7%C3%A3o%20do%20GEOEDUCA." data-request-kind="demo">Solicitar uma demonstração</a></div></section>
   </main>
   <footer><div class="container footer-top"><a class="brand" href="#inicio"><svg class="icon brand-icon"><use href="#i-globe"/></svg><span>GEO<span class="brand-accent">EDUCA</span></span></a><p>Ensino de geografia. Experiências que conectam.</p></div><div class="container footer-bottom"><span>© <span id="year">2026</span> GEOEDUCA</span><span>Projeto educacional desenvolvido como TCC.</span><a href="#inicio">Voltar ao início</a></div></footer>
+  <dialog class="request-dialog" id="request-dialog" aria-labelledby="request-title" aria-describedby="request-description">
+    <div class="request-heading"><h2 id="request-title">Solicitar acesso</h2><button class="request-close" type="button" aria-label="Fechar formulário"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+    <p id="request-description">Informe seus dados para conversar sobre o GEOEDUCA e combinar as condições de acesso.</p>
+    <ol class="request-process" aria-label="Etapas para começar"><li><span aria-hidden="true">01</span>Solicite</li><li><span aria-hidden="true">02</span>Converse</li><li><span aria-hidden="true">03</span>Combine o acesso</li></ol>
+    <form id="request-form" method="dialog" hidden>
+      <div class="request-fields">
+        <div class="request-field"><label for="request-name">Seu nome</label><input id="request-name" name="name" type="text" autocomplete="name" minlength="2" maxlength="100" required></div>
+        <div class="request-field"><label for="request-email">Seu e-mail</label><input id="request-email" name="email" type="email" autocomplete="email" maxlength="254" required></div>
+        <div class="request-field"><label for="request-profile">Você representa</label><select id="request-profile" name="profile" required><option value="">Selecione</option><option value="teacher">Professor</option><option value="school">Escola</option></select></div>
+        <div class="request-field"><label for="request-students" id="request-students-label">Quantidade de alunos</label><input id="request-students" name="students" type="number" min="1" max="9007199254740991" step="1" inputmode="numeric" required aria-describedby="request-quote"></div>
+      </div>
+      <div class="request-estimate"><p class="request-estimate-label">Condições do seu acesso</p><p class="request-quote" id="request-quote" aria-live="polite" aria-atomic="true"></p></div>
+      <div class="request-actions"><button class="button button-navy" type="submit" name="channel" value="whatsapp">Continuar no WhatsApp</button><button class="button button-outline" type="submit" name="channel" value="email">Usar e-mail</button></div>
+      <p class="request-note">Você revisa e envia a mensagem no aplicativo escolhido. As condições de contratação são combinadas antes da liberação do acesso.</p>
+      <p class="request-status" id="request-status" role="status"></p>
+    </form>
+  </dialog>
 </body>
 </html>

@@ -2,6 +2,114 @@
 (() => {
   'use strict';
   document.documentElement.classList.add('js-enabled');
+  // Solicitações assistidas: prepara a mensagem; o visitante conclui o envio no aplicativo.
+  (() => {
+    const dialog = document.getElementById('request-dialog');
+    const form = document.getElementById('request-form');
+    if (!dialog || !form || typeof dialog.showModal !== 'function') return;
+    const name = document.getElementById('request-name');
+    const email = document.getElementById('request-email');
+    const profile = document.getElementById('request-profile');
+    const students = document.getElementById('request-students');
+    const summary = document.getElementById('request-quote');
+    const status = document.getElementById('request-status');
+    const title = document.getElementById('request-title');
+    const studentLabel = document.getElementById('request-students-label');
+    const money = cents => `R$ ${(cents / 100).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+    let kind = 'access', annual = false, launch = false, opener = null;
+    let previousOverflow = '';
+    function quotation() {
+      if (students.value === '' && kind === 'demo' && !students.validity.badInput) return null;
+      const count = Number(students.value);
+      if (students.validity.badInput || !Number.isSafeInteger(count) || count < 1) return {kind: 'invalid'};
+      if (typeof GEOEDUCA_PRICING === 'undefined') return {kind: 'custom', studentCount: count};
+      return GEOEDUCA_PRICING.quote(count, {annual, launch});
+    }
+    function priceLines(quote) {
+      if (!quote) return ['Quantidade de alunos e plano a combinar.'];
+      if (quote.kind === 'custom') return [`Período solicitado: ${annual ? 'anual' : 'mensal'}.`, 'Proposta personalizada: valor a combinar.'];
+      if (quote.kind !== 'priced') return [];
+      const lines = [`Período: ${annual ? 'anual' : 'mensal'}.`, `Mensalidade regular: ${money(quote.regularMonthlyCents)}.`];
+      if (annual) {
+        lines.push(`Estimativa anual: ${money(quote.annualCents)}, pagamento antecipado; 12 meses pelo valor de 10 mensalidades.`);
+      } else if (quote.launchApplied) {
+        lines.push(`Promoção de lançamento: ${money(quote.priceCents)}/mês nas três primeiras mensalidades; depois ${money(quote.regularMonthlyCents)}/mês. Mínimo mensal de R$ 29,90 respeitado.`);
+      } else {
+        lines.push(`Estimativa: ${money(quote.priceCents)}/mês, sem promoção selecionada.`);
+      }
+      return lines;
+    }
+    function updateSummary() {
+      const quote = quotation();
+      students.setCustomValidity(quote?.kind === 'invalid' ? 'Informe uma quantidade inteira de alunos, maior que zero.' : '');
+      students.setAttribute('aria-invalid', String(quote?.kind === 'invalid'));
+      summary.textContent = quote?.kind === 'invalid' ? 'Informe uma quantidade inteira de alunos, maior que zero.' : priceLines(quote).join(' ');
+      status.textContent = '';
+      return quote;
+    }
+    document.querySelectorAll('[data-request-kind]').forEach(link => {
+      link.addEventListener('click', event => {
+        if (event.defaultPrevented || event.button > 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        kind = link.dataset.requestKind === 'demo' ? 'demo' : 'access';
+        title.textContent = kind === 'demo' ? 'Solicitar uma demonstração' : 'Solicitar acesso';
+        annual = Boolean(document.querySelector('input[name="billing-period"][value="annual"]:checked'));
+        launch = !annual && Boolean(document.getElementById('launch-promotion')?.checked);
+        students.required = kind === 'access';
+        studentLabel.textContent = kind === 'demo' ? 'Quantidade de alunos (opcional)' : 'Quantidade de alunos';
+        students.value = kind === 'demo' ? '' : document.getElementById('student-count')?.value || '';
+        updateSummary();
+        // Se o navegador não conseguir abrir o formulário, o href continua levando ao contato.
+        try { dialog.showModal(); } catch (_) { return; }
+        event.preventDefault();
+        opener = link;
+        previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        name.focus({preventScroll: true});
+      });
+    });
+    dialog.querySelector('.request-close').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('close', () => {
+      document.body.style.overflow = previousOverflow;
+      opener?.focus({preventScroll: true});
+    });
+    // Fecha somente quando o clique começa e termina fora do conteúdo.
+    let backdropPressed = false;
+    const outside = event => {
+      const bounds = dialog.getBoundingClientRect();
+      return event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom;
+    };
+    dialog.addEventListener('pointerdown', event => {backdropPressed = event.target === dialog && outside(event);});
+    dialog.addEventListener('click', event => {
+      if (backdropPressed && event.target === dialog && outside(event)) dialog.close();
+      backdropPressed = false;
+    });
+    students.addEventListener('input', updateSummary);
+    name.addEventListener('input', () => name.setCustomValidity(''));
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const quote = updateSummary();
+      name.setCustomValidity(name.value.trim().length < 2 ? 'Informe seu nome com pelo menos dois caracteres.' : '');
+      if (!form.reportValidity()) return;
+      const lines = [
+        kind === 'demo' ? 'Olá, gostaria de solicitar uma demonstração do GEOEDUCA.' : 'Olá, gostaria de solicitar acesso ao GEOEDUCA.',
+        '', `Nome: ${name.value.trim()}`, `E-mail: ${email.value.trim()}`,
+        `Perfil: ${profile.value === 'school' ? 'Escola' : 'Professor'}`,
+        ...(quote ? [`Quantidade de alunos: ${quote.studentCount}`] : []),
+        ...priceLines(quote), '',
+        'Simulação informativa. Gostaria de combinar as condições de contratação e liberação do acesso.'
+      ];
+      const message = lines.join('\n');
+      const useEmail = event.submitter?.value === 'email';
+      const subject = kind === 'demo' ? 'Demonstração do GEOEDUCA' : 'Solicitação de acesso ao GEOEDUCA';
+      const url = useEmail
+        ? `mailto:joaquim.neto.senai@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`
+        : `https://wa.me/5515996817066?text=${encodeURIComponent(message)}`;
+      status.textContent = `A mensagem está pronta. Revise e conclua o envio ${useEmail ? 'no seu aplicativo de e-mail' : 'no WhatsApp'}.`;
+      try { window.location.assign(url); }
+      catch (_) { status.textContent = 'Não foi possível abrir o aplicativo. Entre em contato pelo WhatsApp (15) 99681-7066 ou pelo e-mail joaquim.neto.senai@gmail.com.'; }
+    });
+    form.hidden = false;
+  })();
   // Os links de acesso usam diretamente o href do HTML, sem reescrita por JavaScript.
   document.getElementById('year').textContent = new Date().getFullYear();
   const menuButton = document.querySelector('.menu-toggle');
@@ -44,7 +152,7 @@
     window.addEventListener('load', () => ScrollTrigger.refresh());
     const motions = gsap.matchMedia();
     motions.add('(prefers-reduced-motion: no-preference)', () => {
-      gsap.from('.hero-copy > *', {opacity: 0, y: 22, duration: .8, stagger: .09, ease: 'power2.out', clearProps: 'all'});
+      gsap.from('.hero-copy > *', {opacity: 0, y: 18, duration: .7, stagger: .08, ease: 'power2.out', clearProps: 'all'});
 
     });
   }
@@ -238,6 +346,7 @@
     interactionMedia.add('(min-width: 851px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => {
       const magnetListeners = [];
       document.querySelectorAll('.button').forEach(button => {
+        if (button.closest('.request-dialog')) return;
         const xTo = gsap.quickTo(button, 'x', {duration: .3, ease: 'power3.out'});
         const yTo = gsap.quickTo(button, 'y', {duration: .3, ease: 'power3.out'});
         const onMove = event => {
