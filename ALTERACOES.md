@@ -139,3 +139,17 @@ Esta rodada substitui os rascunhos públicos anteriores.
 | `ALTERACOES.md` | Registro desta simplificação e lista exata de trechos. |
 
 Cabeçalho, rodapé, IDs, classes, modo claro/escuro e demais arquivos preservados. Conferidos links locais, âncoras, ARIA, redução do texto e integridade dos pacotes. Não houve mudança de backend nem inspeção visual em navegador.
+
+
+## Design e animações sutis — 04/10/2026
+
+| Arquivo | Trechos alterados nesta rodada |
+| --- | --- |
+| `index.html` | Versões de cache de CSS/script/motion e descrição ARIA da Terra, adequada ao movimento visual novo. Nenhuma alteração de texto visível, link, preço ou estrutura. GSAP/ScrollTrigger já tinham defer e foram preservados. |
+| `styles.css` | Barra de leitura com largura fixa/scaleX; fundo base do hero derivado das variáveis; componente ambient-canvas substituído pelas duas camadas ambient-aurora; spans do título; tamanho/peso do título e ajustes existentes de mobile/tablet; regras de movimento reduzido. Nenhum bloco :root ou valor de variável de cor foi alterado. |
+| `script.js` | Retirada da entrada genérica do hero, do desenho contínuo dos fundos e da rotação do objeto WebGL por frame. Mantidos renderização/resize do globo e fallback; guarda adicional para dispositivos modestos. Hero/fundos/movimento DOM são centralizados em motion.js. Simulador e seus valores permanecem idênticos. |
+| `motion.js` | Progresso por transform, refresh após imagens/fontes, padrão de entrada por matchMedia/batch, split acessível do título e sequência do hero, foco/restauração do scroll, aurora e Terra com transforms, pausa por visibilidade e limpeza de listeners. |
+| `LEIA-ME.md` | Inventário anterior, uso da nova base, instalação dos seis arquivos, testes e limites de verificação visual. |
+| `ALTERACOES.md` | Registro exato desta rodada. |
+
+Mantidos texto, preços, links, lógica do cálculo, paleta, conteúdo/estrutura das seções e componentes existentes. A rotação intensa e os fundos por canvas foram substituídos conforme o pedido de movimento sutil e leve. Nenhuma publicação ou alteração de backend efetuada.

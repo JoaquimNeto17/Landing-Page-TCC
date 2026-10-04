@@ -232,7 +232,9 @@ nav>a:hover{
   bottom:0;
   height:2px;
   background:var(--gold);
-  width:0
+  width:100%;
+  transform:scaleX(0);
+  transform-origin:left center
 }
 .hero{
   position:relative;
@@ -249,7 +251,7 @@ nav>a:hover{
   position:absolute;
   z-index:-1;
   inset:0;
-  background:radial-gradient(ellipse at 77% 48%,#25295166,transparent 55%),linear-gradient(115deg,#0b0a32 20%,#101331 75%,#102032);
+  background:linear-gradient(115deg,var(--navy) 20%,var(--navy-light) 75%,var(--navy));
   pointer-events:none
 }
 .hero-grid{
@@ -1032,14 +1034,21 @@ footer{
   position:relative;
   isolation:isolate
 }
-.ambient-canvas{
+.ambient-aurora{
   position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
+  inset:-6%;
   z-index:0;
-  pointer-events:none
+  pointer-events:none;
+  opacity:.55;
+  background:linear-gradient(125deg,transparent 20%,color-mix(in srgb,var(--gold) 14%,transparent) 45%,color-mix(in srgb,var(--navy-light) 55%,transparent) 60%,transparent 82%);
 }
+.ambient-aurora:nth-of-type(2){
+  background:linear-gradient(55deg,transparent 25%,color-mix(in srgb,var(--forest) 45%,transparent) 48%,color-mix(in srgb,var(--gold) 9%,transparent) 65%,transparent 85%);
+}
+.hero-word{display:inline-block}
+.hero.ambient-surface,.project-section.ambient-surface,.closing-section.ambient-surface{overflow:clip}
+@media(max-width:850px){.ambient-aurora{opacity:.35}}
+@media(prefers-reduced-motion:reduce){.ambient-aurora{transform:none!important}.earth-scene,.earth-scene canvas,.earth-fallback{transform:none!important}}
 .ambient-surface>.container{
   position:relative;
   z-index:1
@@ -3056,7 +3065,7 @@ html{
 
 /* Refinamento aprovado: abertura, cards, estimativa e contratação assistida. */
 .hero-copy{max-width:630px}
-.hero h1{font-size:clamp(3.3rem,5.2vw,4.8rem);line-height:1.08;letter-spacing:-.06em}
+.hero h1{font-size:clamp(3.35rem,5.7vw,5.35rem);font-weight:600;line-height:1.06;letter-spacing:-.055em}
 .hero .eyebrow{margin-bottom:26px}
 .hero-description{max-width:470px;margin-top:28px;line-height:1.75}
 .hero-actions{gap:26px;margin-top:36px;flex-wrap:wrap}
@@ -3095,12 +3104,12 @@ html{
   .earth-scene{width:min(100%,640px);max-height:640px;left:0;justify-self:center}
 }
 @media(max-width:1100px) and (min-width:851px){
-  .hero h1{font-size:clamp(3rem,5.5vw,4rem)}
+  .hero h1{font-size:clamp(3.1rem,5.7vw,4.25rem)}
   .hero-actions{gap:16px}
   .hero-actions .button-gold{padding-inline:20px}
 }
 @media(max-width:850px){
-  .hero h1{font-size:clamp(2.5rem,7.5vw,3.65rem)}
+  .hero h1{font-size:clamp(2.55rem,7.7vw,3.8rem)}
   .hero .eyebrow{margin-bottom:20px}
   .hero-description{margin-top:20px}
   .hero-actions{margin-top:26px;gap:18px}

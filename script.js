@@ -209,16 +209,7 @@
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const gsapAvailable = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
-  if (gsapAvailable) {
-    gsap.registerPlugin(ScrollTrigger);
-    if (document.fonts) document.fonts.ready.then(() => ScrollTrigger.refresh());
-    window.addEventListener('load', () => ScrollTrigger.refresh());
-    const motions = gsap.matchMedia();
-    motions.add('(prefers-reduced-motion: no-preference)', () => {
-      gsap.from('.hero-copy > *', {opacity: 0, y: 18, duration: .7, stagger: .08, ease: 'power2.out', clearProps: 'all'});
-
-    });
-  }
+  // Hero e entradas de seção compartilham a base de motion.js.
 
   // Simulador informativo: a contratação não é processada nesta página.
   (() => {
@@ -300,106 +291,7 @@
     }));
     update();
   })();
-  // Fundo abstrato de linhas e pontos: anima somente as seções visíveis.
-  (() => {
-    const layers = [];
-    let frameHandle = 0;
-    let lastFrame = 0;
-    let elapsed = 0;
-    const darkSections = new Set(['hero', 'project-section', 'closing-section']);
-    const lightEffects = window.matchMedia('(max-width: 850px), (pointer: coarse)');
-    const pointCount = () => lightEffects.matches ? 10 : 24;
-    function paint(layer, time) {
-      const {ctx, width: w, height: h, points} = layer;
-      const dark = layer.dark || document.documentElement.dataset.theme === 'dark';
-      if (!w || !h) return;
-      ctx.clearRect(0, 0, w, h);
-      ctx.lineWidth = .75;
-      const lineColor = dark ? 'rgba(204,164,59,0.20)' : 'rgba(11,10,50,0.055)';
-      // Traços contínuos sugerem uma malha cartográfica em movimento.
-      ctx.strokeStyle = lineColor;
-      for (let line = 0; line < (lightEffects.matches ? 8 : 11); line++) {
-        ctx.beginPath();
-        for (let x = -40; x <= w + 40; x += 20) {
-          const wave = Math.sin(x / Math.max(w, 1) * Math.PI * 2 + time * .12 + line * .38);
-          const y = h * (line + .3) / (lightEffects.matches ? 7 : 10) + wave * Math.min(42, h * .05) + Math.cos(time * .16 + line) * 12;
-          if (x === -40) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-      }
-      const positions = points.slice(0, pointCount()).map(point => ({x: (point.x + Math.sin(time * .13 + point.phase) * .035) * w, y: (point.y + Math.cos(time * .11 + point.phase) * .035) * h}));
-      ctx.strokeStyle = dark ? 'rgba(204,164,59,0.12)' : 'rgba(11,10,50,0.045)';
-      for (let i = 0; i < positions.length; i++) {
-        const a = positions[i];
-        for (let j = i + 1; j < positions.length; j++) {
-          const b = positions[j];
-          if (Math.hypot(a.x - b.x, a.y - b.y) < 145) {
-            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-          }
-        }
-      }
-    }
-    function frame(timestamp) {
-      frameHandle = 0;
-      if (reducedMotion.matches || document.hidden || !layers.some(layer => layer.visible)) {lastFrame = 0; return;}
-      if (!lastFrame || timestamp - lastFrame >= (lightEffects.matches ? 50 : 33)) {
-        elapsed += lastFrame ? Math.min((timestamp - lastFrame) / 1000, .06) : 0;
-        lastFrame = timestamp;
-        layers.filter(layer => layer.visible).forEach(layer => paint(layer, elapsed));
-      }
-      frameHandle = requestAnimationFrame(frame);
-    }
-    function start() {
-      if (!frameHandle && !reducedMotion.matches && !document.hidden && layers.some(layer => layer.visible)) frameHandle = requestAnimationFrame(frame);
-    }
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        const layer = layers.find(item => item.section === entry.target);
-        if (layer) layer.visible = entry.isIntersecting;
-      });
-      start();
-    }, {rootMargin: '60px'});
-    const resizeObserver = new ResizeObserver(entries => {
-      entries.forEach(entry => {
-        const layer = layers.find(item => item.section === entry.target);
-        if (!layer) return;
-        const bounds = layer.section.getBoundingClientRect();
-        layer.width = Math.ceil(bounds.width);
-        layer.height = Math.ceil(bounds.height);
-        if (!layer.width || !layer.height) return;
-        // Limita a memória do fundo, mesmo em seções longas no celular.
-        const scale = Math.min(1, 1600 / layer.height, Math.sqrt(1000000 / (layer.width * layer.height)));
-        layer.canvas.width = Math.max(1, Math.round(layer.width * scale));
-        layer.canvas.height = Math.max(1, Math.round(layer.height * scale));
-        layer.ctx.setTransform(layer.canvas.width / layer.width, 0, 0, layer.canvas.height / layer.height, 0, 0);
-        paint(layer, elapsed);
-      });
-      start();
-    });
-    document.querySelectorAll('main > section').forEach((section, index) => {
-      const background = document.createElement('canvas');
-      background.className = 'ambient-canvas'; background.setAttribute('aria-hidden', 'true');
-      const ctx = background.getContext('2d');
-      if (!ctx) return;
-      section.classList.add('ambient-surface');
-      section.prepend(background);
-      const points = Array.from({length: 24}, (_, i) => ({x: ((i * .618033 + index * .11) % 1), y: ((i * .414213 + .15) % 1), phase: i * 1.8 + index}));
-      layers.push({section, canvas: background, ctx, points, width: 0, height: 0, visible: false, dark: [...darkSections].some(name => section.classList.contains(name))});
-      observer.observe(section); resizeObserver.observe(section);
-    });
-    const updateMotion = () => {
-      if (frameHandle) cancelAnimationFrame(frameHandle);
-      frameHandle = 0; lastFrame = 0;
-      layers.forEach(layer => paint(layer, elapsed));
-      start();
-    };
-    reducedMotion.addEventListener('change', updateMotion);
-    lightEffects.addEventListener('change', updateMotion);
-    document.addEventListener('visibilitychange', updateMotion);
-    window.addEventListener('pagehide', () => {if (frameHandle) cancelAnimationFrame(frameHandle); frameHandle = 0;});
-    window.addEventListener('pageshow', start);
-    window.addEventListener('geoeduca:themechange', updateMotion);
-  })();
+  // Fundo abstrato substituído pela aurora de motion.js, sem desenho por frame.
 
   // Interações de mouse complementam o conteúdo; não substituem o teclado.
   if (gsapAvailable) {
@@ -490,37 +382,75 @@
     canvas.hidden = true;
     sceneElement.setAttribute('aria-label', 'Representação da superfície terrestre');
   });
-  if (gsapAvailable) {
-    const motions = gsap.matchMedia();
-    motions.add('(prefers-reduced-motion: no-preference)', () => {
-      gsap.to(earth.rotation, {y: -0.70 + Math.PI * 2.5, ease: 'none', onUpdate: () => {
-        canvas.dataset.rotation = earth.rotation.y.toFixed(3);
-        render();
-      }, scrollTrigger: {
-        trigger: '.hero', start: 'top top',
-        end: 'bottom top',
-        pin: false, scrub: 1.15,
-        invalidateOnRefresh: true
-      }});
-      return () => {earth.rotation.y = -0.70; render();};
-    });
-  } else {
-    // Fallback sem GSAP: o globo continua acompanhando o scroll.
-    let scheduled = false;
-    window.addEventListener('scroll', () => {
-      if (scheduled || reducedMotion.matches) return;
-      scheduled = true;
-      requestAnimationFrame(() => {
-        earth.rotation.y = -0.70 + window.scrollY * .007;
-        render(); scheduled = false;
-      });
-    }, {passive: true});
-    reducedMotion.addEventListener('change', () => {
-      if (reducedMotion.matches) {earth.rotation.y = -0.70; render();}
+  // Recuperado do backup: a textura gira na esfera 3D, não no canvas inteiro.
+  // O backup tinha giro pelo scroll (2,5π, scrub 1,15), sem loop automático.
+  const rotationState = {idle: 0, scroll: 0};
+  const heroElement = sceneElement.closest('.hero');
+  const initialBounds = heroElement.getBoundingClientRect();
+  let earthInView = initialBounds.bottom > 0 && initialBounds.top < window.innerHeight;
+  let earthSuspended = false;
+  let earthContextLost = false;
+  let rotationFrame = 0;
+  let idleTween = null;
+  let scrollTween = null;
+  let fallbackFrame = 0;
+  let lastRotationTime = 0;
+  const mayRotate = () => !reducedMotion.matches && !document.hidden && !earthSuspended && !earthContextLost && earthInView;
+  function updateEarthRotation() {
+    if (!mayRotate()) return;
+    earth.rotation.y = -.70 + rotationState.idle + rotationState.scroll;
+    canvas.dataset.rotation = earth.rotation.y.toFixed(3);
+    // Scroll e loop compartilham um único render por frame.
+    if (!rotationFrame) rotationFrame = requestAnimationFrame(() => {
+      rotationFrame = 0;
+      if (mayRotate()) render();
     });
   }
+  function fallbackRotation(timestamp) {
+    fallbackFrame = 0;
+    if (!mayRotate()) {lastRotationTime = 0;return;}
+    if (lastRotationTime) rotationState.idle += Math.min((timestamp - lastRotationTime) / 1000, .1) * Math.PI * 2 / 75;
+    lastRotationTime = timestamp;
+    rotationState.scroll = window.scrollY * .007; // Coeficiente do fallback original.
+    updateEarthRotation();
+    fallbackFrame = requestAnimationFrame(fallbackRotation);
+  }
+  function syncEarthRotation() {
+    if (idleTween) {
+      if (mayRotate()) idleTween.resume(); else idleTween.pause();
+      if (reducedMotion.matches || earthContextLost) scrollTween.scrollTrigger.disable(false);
+      else scrollTween.scrollTrigger.enable(false);
+    } else if (mayRotate() && !fallbackFrame) fallbackFrame = requestAnimationFrame(fallbackRotation);
+    if (!mayRotate()) {
+      if (rotationFrame) cancelAnimationFrame(rotationFrame);
+      if (fallbackFrame) cancelAnimationFrame(fallbackFrame);
+      rotationFrame = fallbackFrame = lastRotationTime = 0;
+    } else updateEarthRotation();
+  }
+  if (gsapAvailable) {
+    gsap.registerPlugin(ScrollTrigger);
+    // Loop independente, acrescentado para o giro contínuo solicitado.
+    idleTween = gsap.to(rotationState, {idle: Math.PI * 2, duration: 75, repeat: -1, ease: 'none', paused: true, onUpdate: updateEarthRotation});
+    scrollTween = gsap.to(rotationState, {scroll: Math.PI * 2.5, ease: 'none', onUpdate: updateEarthRotation, scrollTrigger: {
+      trigger: '.hero', start: 'top top', end: 'bottom top',
+      pin: false, scrub: 1.15, invalidateOnRefresh: true
+    }});
+  }
+  if (window.IntersectionObserver) {
+    new IntersectionObserver(entries => {
+      earthInView = entries[0].isIntersecting;
+      syncEarthRotation();
+    }).observe(heroElement);
+  }
+  reducedMotion.addEventListener('change', syncEarthRotation);
+  document.addEventListener('visibilitychange', syncEarthRotation);
+  window.addEventListener('pagehide', () => {earthSuspended = true;syncEarthRotation();});
+  window.addEventListener('pageshow', () => {earthSuspended = false;syncEarthRotation();});
+  syncEarthRotation();
   canvas.addEventListener('webglcontextlost', event => {
     event.preventDefault();
+    earthContextLost = true;
+    syncEarthRotation();
     sceneElement.classList.remove('is-ready');
     canvas.hidden = true;
   });
