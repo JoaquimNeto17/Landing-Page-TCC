@@ -182,3 +182,78 @@ A seleção é manual, com abas acessíveis por clique, setas esquerda/direita, 
 Em notebooks de até 850px de altura, o enquadramento usa uma imagem inteira de até 240px de altura e mantém a opção de abrir o tamanho original. No celular, a galeria usa a largura disponível e os cards ficam abaixo. Se o conteúdo ultrapassar a área útil da tela, o ajuste existente permite que a seção cresça, preservando todo o conteúdo. As imagens permanecem com suas cores originais nos dois temas; a moldura, abas e legendas acompanham o tema.
 
 Arquivos desta entrega: `index.html`, `styles.css`, `script.js`, `motion.js`, `LEIA-ME.md` e a nova pasta `assets/screenshots/` com `jogos.png`, `ranking.png` e `bandeiras.png`. Substitua os arquivos e copie a pasta mantendo essa estrutura. Os valores, contatos, formulários, Terra e Copero continuam preservados. As imagens e as interações foram conferidas em testes estáticos/DOM simulado. A inspeção visual no navegador da publicação continua pendente.
+
+## Validação, privacidade e painel do professor — 04/10/2026
+
+Copie os arquivos do pacote `GEOEDUCA_Ajustes_Validacao_Privacidade.zip` para a pasta principal da landing, mantendo a estrutura de `assets/`. A lista exata dos arquivos e dos trechos está em `ALTERACOES.md`. Não é necessário substituir os arquivos de preços, animação, tema ou imagens da área do aluno.
+
+A faixa logo após o hero informa o teste no SESI CEE 399, nas turmas do 6º e 9º ano, com cerca de 70 alunos, conforme os dados fornecidos. O parágrafo principal do projeto, a mensagem do CTA final e o rodapé foram atualizados. A apresentação e os metadados agora especificam geografia do Brasil. A imagem de compartilhamento está em `assets/og-geoeduca.png`, com 1200 × 630 pixels. O favicon existente foi mantido.
+
+O painel do professor reutiliza a galeria com abas manuais. Substitua `assets/screenshots/professor-quiz.png` e `assets/screenshots/professor-resultados.png` pelas capturas reais. Os arquivos provisórios mostram claramente que são espaços reservados. Quando substituir, ajuste também os atributos `width`, `height`, `alt`, as legendas “Captura em preparação” e o `aria-label` da galeria no HTML para descrever as telas reais. Sem JavaScript, as duas imagens aparecem em sequência.
+
+O simulador mantém quantidade, período, estimativa e Solicitar acesso visíveis. Promoção, explicações de descontos, composição e condições foram reunidas no accordion fechado “Perfis, faixas e descontos”. Os IDs e elementos atualizados pelo script foram preservados. `pricing.js` não foi alterado.
+
+Os links do rodapé abrem `privacidade.html` e `termos.html`, que utilizam a mesma folha de estilos e o tema existente, sem carregar o script da landing ou animações. Preencha e confirme todos os campos `[PREENCHER]` antes de tratar os documentos como versões finais. São rascunhos com informações operacionais pendentes, não uma declaração de conformidade implementada no backend. O conteúdo aborda dados de alunos, finalidade, acesso, ranking, menores, armazenamento, retenção, direitos e contato. Referências de revisão: LGPD e orientação da ANPD, indicadas na política.
+
+O aviso junto ao acesso da header permanece para links cujo hostname termina em `.onrender.com`. Ao mudar o `href` para o domínio próprio, o script oculta o aviso e remove sua associação `aria-describedby`. Para o funcionamento sem JavaScript, retire também o `<small id="platform-loading-note">` e o `aria-describedby` do link ao migrar. Atualize o texto correspondente nos Termos. Os endereços canonical, og:url e das imagens de compartilhamento usam a publicação atual `https://geoeduca-theta.vercel.app/`; altere-os também nas páginas legais quando houver domínio próprio.
+
+Verificados: sintaxe do JavaScript; 4.000 cenários de preço; formulários sem envio real; galerias independentes, teclado e movimento reduzido em DOM simulado; aviso Render/domínio próprio; links, âncoras, ARIA, tamanhos de imagem e metadados. Todos os blocos originais `:root` e os bytes de `pricing.js` foram comparados e preservados. O novo CSS usa somente variáveis existentes. O fundo conserva as linhas animadas e deixa de desenhar os pontos circulares. A conferência visual em navegador da publicação permanece pendente.
+
+## Preenchimento dos documentos para a fase de TCC — 04/10/2026
+
+Substitua somente `privacidade.html`, `termos.html`, `LEIA-ME.md` e `ALTERACOES.md` pelo pacote `GEOEDUCA_Documentos_TCC.zip`. Esta atualização complementa o pacote visual anterior; utiliza o mesmo `styles.css` já enviado.
+
+Preenchidos os dados confirmados: contato `joaquim.neto.senai@gmail.com`, abrangência de todas as escolas participantes dos testes, projeto de TCC sem contratação comercial atual e continuidade futura indefinida, cadastro/recuperação organizados pelo professor, Firebase atual em transição para Supabase Pro, frontend/backend da plataforma no Render e atividades inseridas pelos professores. A landing permanece na Vercel. Os preços foram contextualizados apenas nos Termos como proposta para eventual continuidade, sem alterar o simulador ou seus valores.
+
+A equipe responsável pelo projeto foi identificada como Joaquim, Pietro, Félix e Luiz. A definição das responsabilidades de cada integrante e das instituições no tratamento dos dados continua pendente. A informação de que o projeto está em testes não foi convertida em declaração de autorização dos responsáveis ou da escola. O texto sobre imagens não afirma licença livre, pois o projeto informou que não possui licenças para elas.
+
+Foi feita leitura pontual do repositório `fonseca-felix/new-tcc`, sem acesso a dados de alunos, sem chamadas autenticadas à plataforma, sem envio de mensagens e sem alterações no backend. O cadastro inclui credenciais, turma e data. A rota `backend/src/routes/alunos.js` guarda `senhaVisivel` junto ao hash; lista alunos para professores sem verificar a propriedade da turma nos trechos consultados; expõe ranking da turma para o perfil aluno; e a exclusão consultada apaga o documento do aluno sem confirmar remoção dos resultados relacionados. `frontend/js/auth.js` guarda sessão/usuário localmente; a área de jogos também utiliza armazenamento local. Esses pontos divergem de parte das respostas e estão registrados em `ALTERACOES.md`, para conferir a versão de fato implantada e corrigir a implementação. Não foi emitida declaração de conformidade nem garantia de exclusão integral.
+
+Pendências: definição das responsabilidades da equipe e das instituições, bases e autorizações dos testes com menores, visibilidade real do ranking, correções de credenciais/permissões, alcance da exclusão, prazo de retenção e fim do TCC, regiões/transferências/backups/logs, horário de suporte e permissões de imagens/materiais. Os campos `[PREENCHER]` correspondentes permanecem nos documentos. Links, âncoras, ARIA, contato e integridade dos arquivos foram conferidos; o restante da landing permanece igual à rodada anterior.
+
+
+## Identificação da equipe responsável — 04/10/2026
+
+Incluídos Joaquim, Pietro, Félix e Luiz na seção 1 das páginas de Privacidade e Termos, conforme os nomes fornecidos. O e-mail permanece o confirmado anteriormente. Não foram inventados sobrenomes, dados de identificação nem atribuições individuais. Os demais campos pendentes continuam sinalizados. O pacote `GEOEDUCA_Documentos_Responsaveis.zip` contém somente `privacidade.html`, `termos.html`, `LEIA-ME.md` e `ALTERACOES.md`; substitua esses quatro arquivos.
+
+
+## Informações complementares dos testes — 04/10/2026
+
+Preenchidos: autorização e acompanhamento da professora de geografia Jesiane no SESI CEE 399; gestão/atendimento pela equipe GEOEDUCA; redefinição de senha pelo professor; RM, nome e sala como dados de cadastro informados; ranking com nomes de colegas; São Paulo como região de armazenamento informada; imagens de bancos gratuitos. Foram registradas as informações de período anual e exclusão dos dados associados, mantendo explícitas as verificações necessárias.
+
+“Anualmente” ainda não define se a retenção termina no fim do ano letivo ou após 12 meses do cadastro, nem se ocorre exclusão, renovação ou revisão. A autorização da professora foi registrada como fornecida, sem afirmar autorização dos pais/responsáveis. “Bancos gratuitos” não identifica os bancos, licenças e créditos de cada imagem. A região São Paulo precisa ser conferida nas configurações dos serviços/backups. As diferenças de inventário, pontuações no ranking e exclusão integral identificadas no código continuam marcadas para verificação na versão dos testes.
+
+Esta rodada modifica somente `privacidade.html`, `termos.html`, `LEIA-ME.md` e `ALTERACOES.md`, no pacote `GEOEDUCA_Documentos_Testes.zip`. Usa a mesma folha de estilos já entregue. Não houve alteração no backend, nas regras de preço ou no visual da landing.
+
+
+## Esclarecimentos sobre retenção, autorização e imagens — 04/10/2026
+
+Esta atualização substitui as informações anteriores sobre período anual e bancos de imagens genéricos. O prazo de retenção permanece indefinido: não foi assumido fim do ano letivo, 12 meses, exclusão automática ou guarda permanente. A equipe confirmou que a autorização da professora Jesiane não foi registrada e que são utilizados dados dos alunos participantes dos testes; não foram apresentados registro institucional ou confirmação do procedimento com pais/responsáveis.
+
+O Codante foi informado como fonte das bandeiras; o endereço do recurso, sua licença e eventuais créditos ainda precisam ser confirmados. A fonte das imagens de biomas ainda não foi definida. Nenhuma permissão de uso foi presumida.
+
+Substitua apenas `privacidade.html`, `termos.html`, `LEIA-ME.md` e `ALTERACOES.md` desta entrega. Os campos relacionados a decisões ainda não tomadas e a verificações técnicas continuam como `[PREENCHER]`. O restante da landing, incluindo layout, paleta, preços, scripts e imagens, não foi alterado.
+
+
+## Respostas operacionais incorporadas — 04/10/2026
+
+Esta rodada prevalece sobre os registros históricos anteriores de retenção e fontes de imagens. Os professores cadastram e alteram os dados. A equipe confirmou que não há procedimento de autorização/comunicação com pais ou responsáveis; a autorização não registrada de Jesiane continua descrita sem afirmar regularização institucional. Papéis decisórios e base legal precisam ser definidos com a escola.
+
+O destino dos dados de testes agora está definido: exclusão quando a plataforma estiver pronta, também confirmada no encerramento do TCC. Isso foi registrado como decisão, sem afirmar que existe exclusão automatizada ou completa. Faltam critério/data de conclusão, procedimento, execução, responsáveis, comunicação e alcance em backups/dados locais. A guarda das mensagens de WhatsApp/e-mail continua indefinida e não foi incluída automaticamente no destino dos dados de testes.
+
+O professor confere RM/nome ao redefinir senha, e a equipe utiliza informações confirmadas pela escola para pedidos sobre dados. Não foi assumido que conhecer RM/nome comprova identidade; os procedimentos de verificação continuam pendentes de documentação, inclusive para solicitações diretas do titular/responsável. O professor analisa uso indevido e o encaminha à equipe docente da escola. Atendimento e manutenção permanecem no contexto acadêmico, sem horários ou disponibilidade inventados.
+
+Fonte das bandeiras: https://docs.apis.codante.io/bandeiras-dos-estados . A documentação consultada identifica Pierre Lapalu como criador e aponta para https://github.com/pierrelapalu/icones-bandeiras-br-uf , com CC0 1.0 Universal no arquivo LICENSE. Os Termos registram a origem e a licença desse conjunto, sem estendê-la a outras imagens. Os biomas foram encontrados via Google; a declaração de ausência de direitos autorais não foi convertida em licença confirmada. Registrar origem, autor, licença e créditos de cada imagem. Orientação do Google: https://support.google.com/websearch/answer/29508?hl=pt-BR . A autorização de materiais dos professores foi registrada como prevista; seu alcance e conteúdos de terceiros ainda precisam ser documentados.
+
+Substitua somente os quatro arquivos de `GEOEDUCA_Documentos_Testes.zip`: `privacidade.html`, `termos.html`, `LEIA-ME.md` e `ALTERACOES.md`. Nenhum script, CSS, preço ou asset foi alterado. Os campos técnicos pendentes não foram preenchidos com suposições. A fase de TCC não foi tratada como prova de dispensa de análise: a LGPD, art. 4º, II, b, mantém a aplicação dos arts. 7º e 11 para fins exclusivamente acadêmicos. Referência: https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709compilado.htm .
+
+
+## Versão simplificada para o TCC — 04/10/2026
+
+A Política de Privacidade e os Termos foram reorganizados em linguagem curta para o contexto acadêmico atual. Esta versão substitui os rascunhos públicos com questionários e campos `[PREENCHER]` descritos nos registros históricos acima. Os pontos indefinidos são apresentados como informações ainda não definidas, sem promessas ou condições empresariais inventadas.
+
+Substitua apenas `privacidade.html`, `termos.html`, `LEIA-ME.md` e `ALTERACOES.md`. O HTML externo das páginas legais, tema, classes e estilos foram preservados. A landing principal, formulário, preços, scripts, CSS e imagens não foram alterados. O simulador continua tratado nos Termos como proposta futura, sem contratação na fase de testes.
+
+A publicação dos textos não resolve três pontos concretos do projeto: alinhamento com a escola sobre dados de menores, identificação das licenças das imagens de biomas e revisão técnica de credenciais/acessos/exclusão. A revisão anterior do repositório encontrou `senhaVisivel` com senha em texto, rotas de alunos sem filtro de titularidade por professor e exclusão somente do documento de cadastro; não foram corrigidas nesta entrega nem confirmadas na versão publicada. Não se declara conformidade, segurança completa ou exclusão integral. A região São Paulo, logs, métricas e backups ainda não foram verificados; o texto público não apresenta esses detalhes como confirmados.
+
+Referências utilizadas permanecem nos documentos: LGPD, documentação do Codante e licença CC0 do conjunto original, e orientação do Google para conferir a licença das imagens. O contexto de TCC não foi convertido em declaração de dispensa automática de cuidados com dados ou direitos de terceiros. Sem novo questionário: o que depende de decisão ou implementação continua informado de forma simples.

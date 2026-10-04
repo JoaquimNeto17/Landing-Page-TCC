@@ -4,9 +4,9 @@
   document.documentElement.classList.add('js-enabled');
   // Galeria de capturas reais: seleção manual, teclado e movimento reduzido.
   (() => {
-    const gallery = document.querySelector('.platform-gallery');
-    if (!gallery) return;
+    document.querySelectorAll('.platform-gallery').forEach(gallery => {
     const tabList = gallery.querySelector('[data-gallery-tabs]');
+    if (!tabList) return;
     const tabs = [...tabList.querySelectorAll('button')];
     const panels = [...gallery.querySelectorAll('[data-gallery-panel]')];
     if (!tabs.length || tabs.length !== panels.length || tabs.some((tab, index) => tab.getAttribute('aria-controls') !== panels[index].id)) return;
@@ -34,7 +34,7 @@
       }
     }
     tabList.setAttribute('role', 'tablist');
-    tabList.setAttribute('aria-label', 'Telas da área do aluno');
+    tabList.setAttribute('aria-label', gallery.getAttribute('data-gallery-label') || 'Telas da área do aluno');
     tabs.forEach((tab, index) => {
       tab.setAttribute('role', 'tab');
       panels[index].setAttribute('role', 'tabpanel');
@@ -55,7 +55,16 @@
     reduced.addEventListener('change', () => {if (reduced.matches) clearMotion();});
     select(0, false, false);
     tabList.hidden = false;
+    });
   })();
+  // O aviso de espera é temporário: acompanha somente o endereço hospedado no Render.
+  document.querySelectorAll('[data-platform-link][aria-describedby]').forEach(link => {
+    const note = document.getElementById(link.getAttribute('aria-describedby'));
+    if (!note) return;
+    try { note.hidden = !new URL(link.href, window.location.href).hostname.endsWith('.onrender.com'); }
+    catch (_) { note.hidden = true; }
+    if (note.hidden) link.removeAttribute('aria-describedby');
+  });
   // Solicitações assistidas: prepara a mensagem; o visitante conclui o envio no aplicativo.
   (() => {
     const dialog = document.getElementById('request-dialog');
@@ -307,7 +316,6 @@
       ctx.clearRect(0, 0, w, h);
       ctx.lineWidth = .75;
       const lineColor = dark ? 'rgba(204,164,59,0.20)' : 'rgba(11,10,50,0.055)';
-      const pointColor = dark ? 'rgba(204,164,59,0.60)' : 'rgba(35,59,11,0.18)';
       // Traços contínuos sugerem uma malha cartográfica em movimento.
       ctx.strokeStyle = lineColor;
       for (let line = 0; line < (lightEffects.matches ? 8 : 11); line++) {
@@ -329,7 +337,6 @@
             ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
           }
         }
-        ctx.beginPath(); ctx.arc(a.x, a.y, dark ? 1.7 : 1.3, 0, Math.PI * 2); ctx.fillStyle = pointColor; ctx.fill();
       }
     }
     function frame(timestamp) {

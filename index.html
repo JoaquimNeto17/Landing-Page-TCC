@@ -4,17 +4,32 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0B0A32">
-  <meta name="description" content="Conheça o GEOEDUCA: atividades, quizzes, provas e jogos de geografia em uma plataforma para professores e alunos.">
-  <title>GEOEDUCA — Geografia em movimento</title>
+  <meta name="description" content="GEOEDUCA: atividades, quizzes e jogos de geografia do Brasil para professores e escolas. Projeto de TCC testado em sala de aula.">
+  <title>GEOEDUCA — Geografia do Brasil em movimento</title>
+  <link rel="canonical" href="https://geoeduca-theta.vercel.app/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="GEOEDUCA — Geografia do Brasil em movimento">
+  <meta property="og:description" content="Atividades, quizzes e jogos de geografia do Brasil para professores e escolas. Projeto de TCC testado em sala de aula.">
+  <meta property="og:image" content="https://geoeduca-theta.vercel.app/assets/og-geoeduca.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="GEOEDUCA: geografia do Brasil para aprender explorando">
+  <meta property="og:url" content="https://geoeduca-theta.vercel.app/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GEOEDUCA — Geografia do Brasil em movimento">
+  <meta name="twitter:description" content="Atividades, quizzes e jogos de geografia do Brasil para professores e escolas.">
+  <meta name="twitter:image" content="https://geoeduca-theta.vercel.app/assets/og-geoeduca.png">
+  <meta name="twitter:image:alt" content="GEOEDUCA: geografia do Brasil para aprender explorando">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <script src="theme.js"></script>
-  <link rel="stylesheet" href="styles.css?v=20261003-student-gallery">
+  <link rel="stylesheet" href="styles.css?v=20261004-validation-privacy">
   <script defer src="assets/vendor/three.min.js"></script>
   <script defer src="assets/vendor/gsap.min.js"></script>
   <script defer src="assets/vendor/ScrollTrigger.min.js"></script>
   <script defer src="assets/earth-data.js"></script>
   <script defer src="pricing.js"></script>
-  <script defer src="script.js?v=20261003-student-gallery"></script>
+  <script defer src="script.js?v=20261004-validation-privacy"></script>
   <script defer src="motion.js?v=20261003-student-gallery"></script>
   <script defer src="layout.js"></script>
 </head>
@@ -39,7 +54,7 @@
       <button class="menu-toggle" aria-controls="navigation" aria-expanded="false" aria-label="Abrir menu"><span></span><span></span></button>
       <nav id="navigation" aria-label="Navegação principal">
         <a href="#recursos">Recursos</a><a href="#como-funciona">Como funciona</a><a href="#projeto">O projeto</a><a href="#precos">Preços</a>
-        <a class="button button-small button-outline-light" href="https://geoeduca-uh27.onrender.com/" data-platform-link>Acessar plataforma</a>
+        <span class="platform-access"><a class="button button-small button-outline-light" href="https://geoeduca-uh27.onrender.com/" data-platform-link aria-describedby="platform-loading-note">Acessar plataforma</a><small id="platform-loading-note">O primeiro acesso do dia pode levar até 1 minuto para carregar.</small></span>
       </nav>
     </div>
     <div class="reading-progress" aria-hidden="true" hidden></div>
@@ -52,7 +67,7 @@
         <div class="hero-copy">
           <p class="eyebrow light"><span class="small-line"></span> GEOGRAFIA EM MOVIMENTO</p>
           <h1 id="hero-title">O mundo é a sua<br><span class="gold-text">sala de aula.</span></h1>
-          <p class="hero-description">Organize turmas, crie atividades e acompanhe seus alunos em uma plataforma de geografia para professores e escolas.</p>
+          <p class="hero-description">Organize turmas, crie atividades e acompanhe seus alunos em uma plataforma de geografia do Brasil para professores e escolas.</p>
           <div class="hero-actions"><a class="button button-gold" href="https://wa.me/5515996817066?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20uma%20demonstra%C3%A7%C3%A3o%20do%20GEOEDUCA." data-request-kind="demo">Solicitar uma demonstração</a><a class="text-link light-link" href="#precos">Ver preços</a></div>
         </div>
         <div class="earth-scene" aria-label="Globo terrestre tridimensional cuja rotação acompanha a rolagem da página" role="img">
@@ -63,6 +78,8 @@
       </div>
       <div class="container hero-bottom"><div class="scroll-hint"><span class="scroll-track" aria-hidden="true"></span>Explore a plataforma</div></div>
     </section>
+
+    <div class="validation-band" aria-label="Validação em sala de aula"><p class="container validation-copy"><span>Testado em sala de aula</span><span class="validation-separator" aria-hidden="true">·</span><span>SESI CEE 399</span><span class="validation-separator" aria-hidden="true">·</span><span>turmas do 6º e 9º ano</span><span class="validation-separator" aria-hidden="true">·</span><span>cerca de 70 alunos</span></p></div>
 
     <section class="intro-band" id="visao-geral" aria-label="Áreas da plataforma"><div class="container intro-grid">
       <div><span class="number">01</span><p><strong>Organize suas aulas.</strong><span>Turmas, alunos e conteúdos.</span></p></div>
@@ -79,6 +96,23 @@
             <article class="resource-row reveal"><span class="icon-box"><svg class="icon"><use href="#i-book"/></svg></span><div><h3>Conteúdo em diferentes formatos</h3><p>Compartilhe tarefas, vídeos, infográficos e links.</p></div></article>
             <article class="resource-row reveal"><span class="icon-box"><svg class="icon"><use href="#i-check"/></svg></span><div><h3>Quizzes e provas</h3><p>Crie quizzes e avaliações com questões objetivas ou discursivas.</p></div></article>
             <article class="resource-row reveal"><span class="icon-box"><svg class="icon"><use href="#i-chart"/></svg></span><div><h3>Resultados para acompanhar</h3><p>Consulte respostas, pontuações e resultados das avaliações.</p></div></article>
+          </div>
+          <div class="platform-gallery teacher-gallery reveal" data-gallery-label="Telas do painel do professor" aria-label="Espaços reservados para capturas do painel do professor">
+            <div class="gallery-window"><span>GEOEDUCA · Painel do professor</span></div>
+            <div class="gallery-tabs" data-gallery-tabs hidden>
+              <button type="button" id="gallery-tab-teacher-quiz" aria-controls="gallery-teacher-quiz">Criação de quiz</button>
+              <button type="button" id="gallery-tab-teacher-results" aria-controls="gallery-teacher-results">Resultados da turma</button>
+            </div>
+            <div class="gallery-stage">
+              <figure id="gallery-teacher-quiz" data-gallery-panel>
+                <a class="gallery-image-link" href="assets/screenshots/professor-quiz.png" target="_blank" rel="noopener" aria-label="Ver imagem completa de Criação de quiz, em uma nova guia"><img class="gallery-image" src="assets/screenshots/professor-quiz.png" alt="Espaço reservado para a captura da criação de quiz no painel do professor" width="1600" height="900" loading="lazy" decoding="async"></a>
+                <figcaption><div><h3>Criação de quiz</h3><p>Captura em preparação.</p></div><a href="assets/screenshots/professor-quiz.png" target="_blank" rel="noopener" aria-label="Ver imagem completa de Criação de quiz, em uma nova guia">Ver imagem completa <span aria-hidden="true">↗</span></a></figcaption>
+              </figure>
+              <figure id="gallery-teacher-results" data-gallery-panel>
+                <a class="gallery-image-link" href="assets/screenshots/professor-resultados.png" target="_blank" rel="noopener" aria-label="Ver imagem completa de Resultados da turma, em uma nova guia"><img class="gallery-image" src="assets/screenshots/professor-resultados.png" alt="Espaço reservado para a captura dos resultados da turma no painel do professor" width="1600" height="900" loading="lazy" decoding="async"></a>
+                <figcaption><div><h3>Resultados da turma</h3><p>Captura em preparação.</p></div><a href="assets/screenshots/professor-resultados.png" target="_blank" rel="noopener" aria-label="Ver imagem completa de Resultados da turma, em uma nova guia">Ver imagem completa <span aria-hidden="true">↗</span></a></figcaption>
+              </figure>
+            </div>
           </div>
         </div>
       </div>
@@ -128,28 +162,37 @@
 
     <section class="project-section section" id="projeto" aria-labelledby="project-title"><div class="container project-layout">
       <div class="project-heading reveal"><p class="eyebrow light">O PROJETO GEOEDUCA</p><h2 id="project-title">Tecnologia com<br>um destino:<br><span class="gold-text">a educação.</span></h2></div>
-      <div class="project-copy reveal"><p class="large-copy">O GEOEDUCA nasceu como um projeto de TCC para aproximar o ensino de geografia das possibilidades da tecnologia.</p><p>Reunimos conteúdos, avaliações e jogos para apoiar o trabalho em sala de aula e despertar a curiosidade sobre o Brasil.</p><a class="text-link light-link" href="#recursos">Conhecer os recursos</a></div>
+      <div class="project-copy reveal"><p class="large-copy">O GEOEDUCA nasceu como TCC e já foi testado em turmas reais do SESI CEE 399, com alunos do 6º e do 9º ano. A experiência em sala de aula orientou os ajustes da plataforma e confirmou o interesse dos alunos pelos jogos de geografia.</p><p>Reunimos conteúdos, avaliações e jogos para apoiar o trabalho em sala de aula e despertar a curiosidade sobre o Brasil.</p><a class="text-link light-link" href="#recursos">Conhecer os recursos</a></div>
     </div></section>
 
     <section class="section pricing-section" id="precos" aria-labelledby="pricing-title"><div class="container">
-      <div class="section-heading reveal"><div><p class="eyebrow">PREÇO POR ALUNO</p><h2 id="pricing-title">Um plano para sua turma.<br>Ou para sua escola.</h2></div><p>A mesma regra para professores e escolas: desconto progressivo por quantidade e 12 meses pelo valor de 10 na assinatura anual.</p></div>
+      <div class="section-heading reveal"><div><p class="eyebrow">PREÇO POR ALUNO</p><h2 id="pricing-title">Um plano para sua turma.<br>Ou para sua escola.</h2></div><p>Simule o valor para sua turma ou escola.</p></div>
       <div class="pricing-calculator reveal" aria-label="Simulador de assinatura">
         <div class="calculator-controls">
           <div class="student-field">
             <label for="student-count">Quantidade de alunos</label>
             <input id="student-count" name="students" type="number" min="1" step="1" inputmode="numeric" value="300" readonly aria-describedby="student-help student-error">
-            <p id="student-help">Simule até 1.000 alunos. Acima disso, proposta personalizada.</p>
+            <p id="student-help">Informe o número de alunos que participarão.</p>
             <p id="student-error" class="field-error" role="alert" hidden>Informe uma quantidade inteira de alunos, maior que zero.</p>
           </div>
           <div class="quantity-presets" aria-label="Quantidades de exemplo">
             <button type="button" data-student-preset="30">30 alunos</button><button type="button" data-student-preset="100">100 alunos</button><button type="button" data-student-preset="300" aria-pressed="true">300 alunos</button><button type="button" data-student-preset="500">500 alunos</button><button type="button" data-student-preset="1000">1.000 alunos</button>
           </div>
           <div class="billing-row"><fieldset class="billing-switch"><legend class="sr-only">Período de cobrança</legend><label><input type="radio" name="billing-period" value="monthly" checked><span>Mensal</span></label><label><input type="radio" name="billing-period" value="annual"><span>Anual</span></label></fieldset>
-          <p class="annual-badge">16,7% de economia no anual</p></div>
+          </div>
+      <details class="pricing-rules"><summary>Perfis, faixas e descontos<span aria-hidden="true">+</span></summary>
+        <div class="pricing-rules-copy">          <p class="annual-badge">16,7% de economia no anual</p>
           <label class="launch-option" for="launch-promotion"><input id="launch-promotion" type="checkbox" aria-describedby="launch-help"><span>Aplicar promoção de lançamento</span></label>
           <p id="launch-help">10% nas três primeiras mensalidades, respeitando o mínimo de R$ 29,90/mês. Exclusiva do mensal; não acumula com o anual.</p>
-      <details class="pricing-rules"><summary>Perfis, faixas e descontos<span aria-hidden="true">+</span></summary>
-        <div class="pricing-rules-copy"><p>Os professores participantes estão incluídos no contrato da escola. Cada aluno conta uma vez no contrato, mesmo em várias turmas. Primeiros 100 alunos: R$ 2,00 por aluno/mês. Do 101º ao 300º: R$ 1,50 por aluno/mês. Do 301º ao 1.000º: R$ 1,20 por aluno/mês. Cada valor se aplica apenas aos alunos da respectiva faixa; a mensalidade mínima é R$ 29,90 e o mínimo anual é R$ 299,00.</p><p>No anual, a quantidade é definida no contrato e o pagamento antecipado corresponde a 10 mensalidades regulares por 12 meses de acesso. A promoção de lançamento dá 10% nas três primeiras mensalidades, respeitando o mínimo mensal, e não acumula com o anual.</p></div>
+<p>Simule até 1.000 alunos. Acima disso, proposta personalizada.</p><p>Os professores participantes estão incluídos no contrato da escola. Cada aluno conta uma vez no contrato, mesmo em várias turmas. Primeiros 100 alunos: R$ 2,00 por aluno/mês. Do 101º ao 300º: R$ 1,50 por aluno/mês. Do 301º ao 1.000º: R$ 1,20 por aluno/mês. Cada valor se aplica apenas aos alunos da respectiva faixa; a mensalidade mínima é R$ 29,90 e o mínimo anual é R$ 299,00.</p><p>No anual, a quantidade é definida no contrato e o pagamento antecipado corresponde a 10 mensalidades regulares por 12 meses de acesso. A promoção de lançamento dá 10% nas três primeiras mensalidades, respeitando o mínimo mensal, e não acumula com o anual.</p>            <p class="price-caption" data-price-caption>Ou R$ 5.000,00 por ano, pago antecipadamente.</p>            <p class="price-saving" data-price-saving>Economia de R$ 1.000,00 ao escolher o anual.</p>          <p class="calculator-disclaimer">O valor apresentado é uma estimativa. Solicite acesso para conhecer a plataforma e combinar as condições de contratação.</p>          <div class="quote-details"><div data-price-breakdown>
+            <table class="tier-table"><caption>Composição da mensalidade regular</caption><colgroup><col><col class="tier-total-column"></colgroup><thead><tr><th scope="col">Faixa de alunos</th><th scope="col">Subtotal</th></tr></thead><tbody>
+              <tr data-tier="0"><th scope="row"><span data-tier-label>100 alunos × R$ 2,00</span></th><td data-tier-total>R$ 200,00</td></tr>
+              <tr data-tier="1"><th scope="row"><span data-tier-label>200 alunos × R$ 1,50</span></th><td data-tier-total>R$ 300,00</td></tr>
+              <tr data-tier="2" hidden><th scope="row"><span data-tier-label>0 alunos × R$ 1,20</span></th><td data-tier-total>R$ 0,00</td></tr>
+              <tr data-minimum-adjustment hidden><th scope="row">Ajuste para a mensalidade mínima</th><td data-minimum-total>R$ 0,00</td></tr>
+            </tbody><tfoot><tr><th scope="row">Mensalidade regular</th><td data-regular-total>R$ 500,00</td></tr></tfoot></table>
+          </div>
+          </div></div>
       </details>
           <noscript><p class="calculator-noscript">Ative o JavaScript para simular outra quantidade ou período. O exemplo exibido corresponde a 300 alunos no mensal, sem promoção.</p></noscript>
         </div>
@@ -158,20 +201,12 @@
           <div class="plan-price" aria-live="polite" aria-atomic="true">
             <p class="price-amount"><span class="price-currency" data-price-currency>R$</span><span data-price-amount>500,00</span><span class="price-period" data-price-period>/mês</span></p>
             <p class="price-per-student" data-price-per-student>Equivale a R$ 1,67 por aluno/mês.</p>
-            <p class="price-caption" data-price-caption>Ou R$ 5.000,00 por ano, pago antecipadamente.</p>
-            <p class="price-saving" data-price-saving>Economia de R$ 1.000,00 ao escolher o anual.</p>
+
+
           </div>
           <a class="button button-navy" href="https://wa.me/5515996817066?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20acesso%20ao%20GEOEDUCA%20e%20conversar%20sobre%20o%20plano%20para%20minha%20turma%20ou%20escola." data-request-kind="access">Solicitar acesso</a>
-          <p class="calculator-disclaimer">O valor apresentado é uma estimativa. Solicite acesso para conhecer a plataforma e combinar as condições de contratação.</p>
-          <details class="quote-details"><summary>Ver composição do preço<span aria-hidden="true">+</span></summary><div data-price-breakdown>
-            <table class="tier-table"><caption>Composição da mensalidade regular</caption><colgroup><col><col class="tier-total-column"></colgroup><thead><tr><th scope="col">Faixa de alunos</th><th scope="col">Subtotal</th></tr></thead><tbody>
-              <tr data-tier="0"><th scope="row"><span data-tier-label>100 alunos × R$ 2,00</span></th><td data-tier-total>R$ 200,00</td></tr>
-              <tr data-tier="1"><th scope="row"><span data-tier-label>200 alunos × R$ 1,50</span></th><td data-tier-total>R$ 300,00</td></tr>
-              <tr data-tier="2" hidden><th scope="row"><span data-tier-label>0 alunos × R$ 1,20</span></th><td data-tier-total>R$ 0,00</td></tr>
-              <tr data-minimum-adjustment hidden><th scope="row">Ajuste para a mensalidade mínima</th><td data-minimum-total>R$ 0,00</td></tr>
-            </tbody><tfoot><tr><th scope="row">Mensalidade regular</th><td data-regular-total>R$ 500,00</td></tr></tfoot></table>
-          </div>
-          </details>
+
+
         </div>
       </div>
     </div></section>
@@ -187,9 +222,9 @@
       <details><summary>Quando começa a cobrança?<span aria-hidden="true">+</span></summary><p>O início da cobrança, a forma de pagamento e as condições de contratação são combinados diretamente antes da liberação. Enviar uma solicitação não gera cobrança automática.</p></details>
     </div></div></section>
 
-    <section class="closing-section" id="explorar"><div class="container closing-inner reveal"><div><p class="eyebrow light">O PRÓXIMO PASSO É EXPLORAR.</p><h2>Seu próximo destino:<br>uma aula mais interativa.</h2></div><a class="button button-gold" href="https://wa.me/5515996817066?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20uma%20demonstra%C3%A7%C3%A3o%20do%20GEOEDUCA." data-request-kind="demo">Solicitar uma demonstração</a></div></section>
+    <section class="closing-section" id="explorar"><div class="container closing-inner reveal"><div><p class="eyebrow light">O PRÓXIMO PASSO É EXPLORAR.</p><h2>Seu próximo destino:<br>uma aula mais interativa.</h2><p class="closing-note">Projeto de TCC validado em sala de aula e aberto a escolas parceiras.</p></div><a class="button button-gold" href="https://wa.me/5515996817066?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20uma%20demonstra%C3%A7%C3%A3o%20do%20GEOEDUCA." data-request-kind="demo">Solicitar uma demonstração</a></div></section>
   </main>
-  <footer><div class="container footer-top"><a class="brand" href="#inicio"><svg class="icon brand-icon"><use href="#i-globe"/></svg><span>GEO<span class="brand-accent">EDUCA</span></span></a><p>Ensino de geografia. Experiências que conectam.</p></div><div class="container footer-bottom"><span>© <span id="year">2026</span> GEOEDUCA</span><span>Projeto educacional desenvolvido como TCC.</span><a href="#inicio">Voltar ao início</a></div></footer>
+  <footer><div class="container footer-top"><a class="brand" href="#inicio"><svg class="icon brand-icon"><use href="#i-globe"/></svg><span>GEO<span class="brand-accent">EDUCA</span></span></a><p>Ensino de geografia. Experiências que conectam.</p></div><div class="container footer-bottom"><span>© <span id="year">2026</span> GEOEDUCA</span><span>Projeto de TCC validado em sala de aula e aberto a escolas parceiras.</span><a href="#inicio">Voltar ao início</a></div><div class="container footer-legal"><a href="privacidade.html">Política de Privacidade</a><a href="termos.html">Termos de Uso</a></div></footer>
   <dialog class="request-dialog" id="request-dialog" aria-labelledby="request-title" aria-describedby="request-description">
     <div class="request-heading"><h2 id="request-title">Solicitar acesso</h2><button class="request-close" type="button" aria-label="Fechar formulário"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
     <p id="request-description">Informe seus dados para conversar sobre o GEOEDUCA e combinar as condições de acesso.</p>
